@@ -141,7 +141,7 @@ STATICFILES_DIRS=[
 ]
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'staticimages')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'product_image')
 
 
 LOGIN_REDIRECT_URL='/afterlogin'
