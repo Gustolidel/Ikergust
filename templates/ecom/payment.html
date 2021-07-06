@@ -1,0 +1,342 @@
+{% load static %}
+
+{% block content %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            background-color: #fff;
+        }
+
+        p {
+            color: #b3b3b3;
+            font-weight: 300;
+        }
+
+        h1, h2, h3, h4, h5, h6,
+        .h1, .h2, .h3, .h4, .h5, .h6 {
+            font-family: "Roboto", sans-serif;
+        }
+
+        a {
+            -webkit-transition: .3s all ease;
+            -o-transition: .3s all ease;
+            transition: .3s all ease;
+        }
+
+        a:hover {
+            text-decoration: none !important;
+        }
+
+        .content {
+            padding: 7rem 0;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        .half, .half .container > .row {
+            height: 100vh;
+        }
+
+        @media (max-width: 991.98px) {
+            .half .bg {
+                height: 500px;
+            }
+        }
+
+        .half .contents, .half .bg {
+            width: 50%;
+        }
+
+        @media (max-width: 1199.98px) {
+            .half .contents, .half .bg {
+                width: 100%;
+            }
+        }
+
+        .half .contents .form-group, .half .bg .form-group {
+            margin-bottom: 0;
+            border: 1px solid #efefef;
+            padding: 15px 15px;
+            border-bottom: none;
+        }
+
+        .half .contents .form-group.first, .half .bg .form-group.first {
+            border-top-left-radius: 7px;
+            border-top-right-radius: 7px;
+        }
+
+        .half .contents .form-group.last, .half .bg .form-group.last {
+            border-bottom: 1px solid #efefef;
+            border-bottom-left-radius: 7px;
+            border-bottom-right-radius: 7px;
+        }
+
+        .half .contents .form-group label, .half .bg .form-group label {
+            font-size: 12px;
+            display: block;
+            margin-bottom: 0;
+            color: #b3b3b3;
+        }
+
+        .half .contents .form-control, .half .bg .form-control {
+            border: none;
+            padding: 0;
+            font-size: 20px;
+            border-radius: 0;
+        }
+
+        .half .contents .form-control:active, .half .contents .form-control:focus, .half .bg .form-control:active, .half .bg .form-control:focus {
+            outline: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .half .bg {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .half a {
+            color: #888;
+            text-decoration: underline;
+        }
+
+        .half .btn {
+            height: 54px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .half .forgot-pass {
+            position: relative;
+            top: 2px;
+            font-size: 14px;
+        }
+
+        .control {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .control .caption {
+            position: relative;
+            top: .2rem;
+            color: #888;
+        }
+
+        .control input {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .control__indicator {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background: #e6e6e6;
+            border-radius: 4px;
+        }
+
+        .control--radio .control__indicator {
+            border-radius: 50%;
+        }
+
+        .control:hover input ~ .control__indicator,
+        .control input:focus ~ .control__indicator {
+            background: #ccc;
+        }
+
+        .control input:checked ~ .control__indicator {
+            background: #007bff;
+        }
+
+        .control:hover input:not([disabled]):checked ~ .control__indicator,
+        .control input:checked:focus ~ .control__indicator {
+            background: #1a88ff;
+        }
+
+        .control input:disabled ~ .control__indicator {
+            background: #e6e6e6;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .control__indicator:after {
+            font-family: 'icomoon';
+            content: '\e5ca';
+            position: absolute;
+            display: none;
+            font-size: 16px;
+            -webkit-transition: .3s all ease;
+            -o-transition: .3s all ease;
+            transition: .3s all ease;
+        }
+
+        .control input:checked ~ .control__indicator:after {
+            display: block;
+            color: #fff;
+        }
+
+        .control--checkbox .control__indicator:after {
+            top: 50%;
+            left: 50%;
+            margin-top: -1px;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .control--checkbox input:disabled ~ .control__indicator:after {
+            border-color: #7b7b7b;
+        }
+
+        .control--checkbox input:disabled:checked ~ .control__indicator {
+            background-color: #7e0cf5;
+            opacity: .2;
+        }
+
+    </style>
+
+
+    <body>
+    <div class="d-lg-flex half">
+        <div class="bg order-1 order-md-2"
+             style="background-image: url('https://media.glassdoor.com/l/2556099/vertical-lighting-controls-office.jpg')">
+            <img src="https://image.freepik.com/foto-gratis/sonriente-mujer-asiatica-pago-tarjeta-credito_2034-2494.jpg">
+        </div>
+        <style>
+            img {
+                background-size: 100%;
+                border-radius: 8px;
+                background-repeat: no-repeat;
+                width: 100%;
+                height: 100%;
+
+            }
+        </style>
+        <div class="contents order-2 order">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+
+                        <h3 class="text-center pt-5">Método de Pago Paypal</h3>
+                        <img class="rounded mx-auto d-block pt-3 " style="width: 50%; height: 50%;"
+                             src="https://image.freepik.com/vector-gratis/concepto-pago-tarjeta-credito-pagina-inicio_52683-24768.jpg">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="#"><span
+                                    class="badge pull-right">{{ total }}</span>{{ total }} Final Payment</a>
+                            </li>
+                        </ul>
+
+                        <script
+                                src="https://www.paypal.com/sdk/js?client-id=AWbVCrW02zFBo9VMpZ0OlGNNRGMktkD92xCM4qInm0uPPKy4n8SezOpANRsxzOsahrIKvvgFeSUo9UR1"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+                        </script>
+
+                        <div id="paypal-button-container"></div>
+
+
+                        <script>
+
+                            function getCookie(name) {
+                                let cookieValue = null;
+                                if (document.cookie && document.cookie !== '') {
+                                    const cookies = document.cookie.split(';');
+                                    for (let i = 0; i < cookies.length; i++) {
+                                        const cookie = cookies[i].trim();
+                                        // Does this cookie string begin with the name we want?
+                                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                            break;
+                                        }
+                                    }
+                                }
+                                return cookieValue;
+                            }
+
+                            const csrftoken = getCookie('csrftoken');
+
+                            function sendOrderConfirmed(details) {
+                                return fetch("{% url 'payment-success' %}", {
+                                    method: "POST",
+                                    body: JSON.stringify(details),
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "X-CSRFToken": csrftoken
+                                    }
+                                })
+                            }
+
+
+                            paypal.Buttons({
+
+                                commit: true,
+
+                                onCancel: function (data) {
+                                    alert('Pago no realizado, has cancelado el proceso');
+                                },
+                                createOrder: function (data, actions) {
+                                    // This function sets up the details of the transaction, including the amount and line item details.
+                                    return actions.order.create({
+                                        purchase_units: [{
+                                            amount: {
+                                                value: {{ total }}
+                                            }
+                                        }]
+                                    });
+                                },
+
+
+                                onApprove: function (data, actions) {
+                                    return actions.order.capture().then(function (details) {
+                                        sendOrderConfirmed(details).then(res => {
+
+                                            setTimeout(function () {
+                                                window.location.replace("{{ CALLBACK_URL }}")
+                                            }, 1000);
+                                        })
+                                    });
+                                }
+
+
+                            }).render('#paypal-button-container');
+                            //This function displays Smart Payment Buttons on your web page.
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+        integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+        crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"si":10,"rayId":"6433c6a188c6971c","version":"2021.4.0"}'></script>
+
+

@@ -1,0 +1,254 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+{% block content %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   <div class="card py-3">
+    <h2 class="text-center">Categoria de Productos</h2>
+   </div>
+    <hr>
+
+    <div class="container card pt-3">
+
+        <div class="row">
+            <div class="col-md-4 ">
+                <h4>Añadir Categoria</h4>
+                <form id="addUser" action="">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="Categoria"
+                               placeholder="Ingresar el nombre de Categoria" required>
+                    </div>
+
+                    <div class=" pt-4 py-5">
+                        <button class="btn btn-primary form-control pt-6 " type="submit">Añadir</button>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-8 table-wrapper-scroll-y my-custom-scrollbar" style="height: 400px;">
+                <h3>Categorias</h3>
+                <table id="userTable" class="table table-bordered table-striped mb-0">
+                    <tr>
+                        <th>Nombre</th>
+
+                        <th colspan="3">Opción</th>
+                    </tr>
+                    {% for user in users %}
+                        <tr id="user-{{ user.id }}">
+                            <td class="userCategoria userData" name="Categoria">{{ user.categoria }}</td>
+
+                            <td align="center">
+                                <button class="btn btn-success form-control" onClick="editUser({{ user.id }})"
+                                        data-toggle="modal" data-target="#myModal" )
+                                ">Editar</button>
+                            </td>
+                            <td align="center">
+                                <button class="btn btn-danger form-control " onClick="deleteUser({{ user.id }})">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            <br>
+                <!--CSS para scroll de tabla proveedor -->
+                <style>
+                    .my-custom-scrollbar {
+                        position: relative;
+                        height: 200px;
+                        overflow: auto;
+                    }
+
+                    .table-wrapper-scroll-y {
+                        display: block;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Actualizar Categoria</h4>
+                </div>
+                <form id="updateUser" action="">
+                    <div class="modal-body">
+                        <input class="form-control" id="form-id" type="hidden" name="formId"/>
+                        <label for="name">Name</label>
+                        <input class="form-control" id="form-Categoria" type="text" name="formCategoria"/>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+
+
+    <script>
+        // Create Django Ajax Call
+        $("form#addUser").submit(function () {
+            var nameInput = $('input[name="Categoria"]').val().trim();
+
+            if (nameInput) {
+                // Create Ajax Call
+                $.ajax({
+                    url: '{% url "crud_ajax_create" %}',
+                    data: {
+                        'Categoria': nameInput,
+
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.user) {
+                            appendToUsrTable(data.user);
+                        }
+                    }
+                });
+
+            } else {
+                alert("Todos los campos deben tener un valor válido.");
+            }
+            $('form#addUser').trigger("reset");
+            return false;
+        });
+
+
+        // Delete Django Ajax Call
+        function deleteUser(id) {
+            var action = Swal.fire({
+                title: 'Estas seguro/a?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, bórralo!',
+                cancelButtonText: 'cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{% url "crud_ajax_delete" %}',
+                        data: {
+                            'id': id,
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.deleted) {
+                                $("#userTable #user-" + id).remove();
+                            }
+                        }
+                    });
+                    Swal.fire(
+                        'Eliminado!',
+                        'La categoria ha sido eliminada.',
+                        'success'
+                    )
+                }
+            })
+        }
+
+
+        // Create Django Ajax Call
+        $("form#updateUser").submit(function () {
+            var idInput = $('input[name="formId"]').val().trim();
+            var nameInput = $('input[name="formCategoria"]').val().trim();
+
+            if (nameInput) {
+                // Create Ajax Call
+                $.ajax({
+                    url: '{% url "crud_ajax_update" %}',
+                    data: {
+                        'id': idInput,
+                        'Categoria': nameInput,
+
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.user) {
+                            updateToUserTabel(data.user);
+                             Swal.fire({
+                                title: 'Ya fue Actualizado',
+                                text: "haz click!",
+                                type: 'success',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Listo'
+                            }).then((result) => {
+                                if (result) {
+                                    // Do Stuff here for success
+                                    location.reload();
+                                } else {
+                                    // something other stuff
+                                }
+
+                            })
+                        }
+                    }
+                });
+
+            } else {
+                alert("Todos los campos deben tener un valor válido.");
+            }
+            $('form#updateUser').trigger("reset");
+            $('#myModal').modal('hide');
+            return false;
+        });
+
+
+        // Update Django Ajax Call
+        function editUser(id) {
+            if (id) {
+                tr_id = "#user-" + id;
+                name = $(tr_id).find(".userCategoria").text();
+
+                $('#form-id').val(id);
+                $('#form-Categoria').val(name);
+
+            }
+        }
+
+        function appendToUsrTable(user) {
+            $("#userTable > tbody:last-child").append(`
+        <tr id="user-${user.id}">
+            <td class="userCategoria" name="Categoria">${user.Categoria}</td>
+
+            '<td align="center">
+                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">EDIT</button>
+            </td>
+            <td align="center">
+                <button class="btn btn-danger form-control" onClick="deleteUser(${user.id})">DELETE</button>
+            </td>
+        </tr>
+    `);
+        }
+
+        function updateToUserTabel(user) {
+            $("#userTable #user-" + user.id).children(".userData").each(function () {
+                var attr = $(this).attr("Categoria");
+                if (attr == "Categoria") {
+                    $(this).text(user.Categoria);
+                }
+            });
+        }
+
+    </script>
+
+{% endblock content %}

@@ -1,0 +1,46 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Foto Producto</title>
+</head>
+<body>
+
+<div class="container">
+
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="fw-bold">Editar Foto producto</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                             <div class="mb-3">
+                                {% if prod.product_image %}
+                                    <img src="{% static prod.product_image.url %}" alt="image here" class="img-fluid w-100 img-responsive ">
+                                {% endif %}
+                                <label for="" class="form-label">Imagen</label>
+                                <input type="file" name="product_image" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-warning">Actualizar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+</body>
+</html>
+{% endblock content %}

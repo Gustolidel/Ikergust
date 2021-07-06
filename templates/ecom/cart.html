@@ -1,0 +1,331 @@
+{% extends 'ecom/homebase.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <!--BOOTSTRAP CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+            rel="stylesheet"
+    />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+
+
+    <head>
+        <title>Cart Ikergust</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <style>
+            .shopping-cart {
+                padding-bottom: 50px;
+                font-family: 'Montserrat', sans-serif;
+            }
+
+
+            .shopping-cart .content {
+                box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
+                background-color: white;
+            }
+
+            .shopping-cart .block-heading {
+                padding-top: 50px;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+
+            .shopping-cart .block-heading p {
+                text-align: center;
+                max-width: 420px;
+                margin: auto;
+                opacity: 0.7;
+            }
+
+
+            .shopping-cart .block-heading h1,
+            .shopping-cart .block-heading h2,
+            .shopping-cart .block-heading h3 {
+                margin-bottom: 1.2rem;
+                color: #3b99e0;
+            }
+
+            .shopping-cart .items {
+                margin: auto;
+            }
+
+            .shopping-cart .items .product {
+
+            }
+
+
+            .shopping-cart .items .product .info .product-name {
+                font-weight: 600;
+            }
+
+            .shopping-cart .items .product .info .product-name .product-info .value {
+                font-weight: 400;
+            }
+
+
+            .shopping-cart .summary {
+                border-top: 2px solid #5ea4f3;
+                background-color: #f7fbff;
+                height: 100%;
+                padding: 30px;
+            }
+
+            .shopping-cart .summary h3 {
+                text-align: center;
+                font-size: 1.3em;
+                font-weight: 600;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            .shopping-cart .summary .summary-item:not(:last-of-type) {
+                padding-bottom: 10px;
+                padding-top: 10px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+
+            .shopping-cart .summary .price {
+                font-size: 1em;
+                float: right;
+            }
+
+
+            @media (min-width: 768px) {
+                .shopping-cart .items .product .info {
+                    padding-top: 25px;
+                    text-align: left;
+                }
+
+                .shopping-cart .items .product .info .price {
+                    font-weight: bold;
+                    font-size: 22px;
+                    top: 17px;
+                }
+
+                .shopping-cart .items .product .info .quantity {
+                    text-align: center;
+                }
+
+                .shopping-cart .items .product .info .quantity .quantity-input {
+                    padding: 4px 10px;
+                    text-align: center;
+                }
+            }
+
+        </style>
+    </head>
+
+    <body>
+    <main class="page">
+        <section class="shopping-cart dark">
+            <div class="container">
+                <div class="block-heading">
+
+                    <h2 class="my-5">Carrito de Compras</h2>
+
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="items">
+                            <div class="col-lg-12">
+
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th class="mob-hide">Imagen</th>
+                                            <th class="mob-hide">Precio Unitario</th>
+                                            <th class="table-qty">Descuento</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                        <tr>
+                                            {% for p in products %}
+                                                {% if p %}
+                                                    <td style="width: 20%;">
+                                                        <p>{{ p.name }}</p>
+
+                                                    </td>
+                                                    <td class="text-center mob-hide">
+
+                                                        {% if p.estado == "Oferta" %}
+                                                            <img src="https://i.ibb.co/WD55W3D/guardar.png"
+                                                                 class=" img-fluid  img-responsive ml-4 mx-auto "
+                                                                 style="position: absolute; margin-top: 15px; height: 60px; width: 60px; z-index: 1;  clear:right;">
+                                                        {% elif p.estado == "Agotado" %}
+                                                            <img src="https://www.pngkey.com/png/full/414-4144576_agotado.png"
+                                                                 class=" img-fluid  img-responsive ml-4"
+                                                                 style="position: absolute; margin-left: 90px; margin-top: 50px; height: 50px; width: 120px; z-index: 1;  clear:right;">
+                                                        {% endif %}
+
+                                                        <img class="img-fluid mx-auto d-block image" style="width: 40%;"
+                                                             src="{% static p.product_image.url %}">
+
+                                                    </td>
+                                                    <td class="mob-hide">
+
+                                                        <span class="order-product-price">S/. {{ p.price }}</span>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="order-product-subtotal">S/. {{ p.product_precio_discuento }}</span>
+                                                    </td>
+                                                    <td clas="text-right">
+
+                                                        <div class="row">
+                                                            <div class="col col-lg-8 py-1">
+
+                                                                <a class="btn btn-outline-danger btn-xs"
+                                                                   href="{% url 'disminuir_cantidad_cart_view' p.pk p.price %}">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="16" height="16"
+                                                                         fill="currentColor"
+                                                                         class="bi bi-bag-dash"
+                                                                         viewBox="0 0 16 16">
+                                                                        <path fill-rule="evenodd"
+                                                                              d="M5.5 10a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5z"/>
+                                                                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                                                                    </svg>
+                                                                </a>
+
+                                                            </div>
+                                                            <div class="col col-lg-8 py-2">
+                                                                <a class="btn btn-outline-success btn-xs"
+                                                                   href="{% url 'añadir_cantidad_cart_view' p.pk p.price %}">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                         height="16" fill="currentColor"
+                                                                         class="bi bi-bag-plus" viewBox="0 0 16 16">
+                                                                        <path fill-rule="evenodd"
+                                                                              d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"/>
+                                                                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col col-lg-8">
+                                                                <a class="btn btn-danger btn-xs"
+                                                                   href="{% url 'remove-from-cart' p.id %}">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                                                         width="16"
+                                                                         height="16" fill="currentColor"
+                                                                         class="bi bi-trash"
+                                                                         viewBox="0 0 16 16">
+                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                                        <path fill-rule="evenodd"
+                                                                              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                                    </svg>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </td>
+
+                                                    </tr>
+
+                                                {% else %}
+                                                    <br><br><br>
+                                                    <h1>no hay productos</h1>
+                                                    <h2>  {{ word }}</h2>
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="col">
+                        <div class="summary">
+                            <h3>Costo Estimado a Pagar</h3>
+                            <div class="summary-item"><span class="text">Subtotal</span><span
+                                    class="price">S/. 0</span></div>
+                            <div class="summary-item"><span class="text">Descuento</span><span
+                                    class="price">S/. {{ descuento }}</span></div>
+                            <div class="summary-item"><span class="text">Transporte</span><span
+                                    class="price">S/.0</span></div>
+
+                            <div class="summary-item"><span class="text">Total</span><span
+                                    class="price">S/. {{ total }} </span></div>
+                            <br>
+
+                            <a type="button" href="/customer-address"
+                               class="btn btn-primary btn-lg btn-block">Checkout</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="text/javascript" src="node_modules/mdb-ecommerce/js/jquery.min.js"></script>
+    <script type="text/javascript" src="node_modules/mdb-ecommerce/js/popper.min.js"></script>
+    <script type="text/javascript" src="node_modules/mdb-ecommerce/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="node_modules/mdb-ecommerce/js/mdb.min.js"></script>
+    <script type="text/javascript" src="node_modules/mdb-ecommerce/js/mdb.ecommerce.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+{% endblock content %}

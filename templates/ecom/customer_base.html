@@ -1,0 +1,292 @@
+<html>
+{% load static %}
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <!--BOOTSTRAP CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+            rel="stylesheet"
+    />
+
+
+</head>
+<body>
+<style>
+    .dropdown {
+        position: static !important;
+    }
+
+    .dropdown-menu {
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+        margin-top: 0px !important;
+        width: 100% !important;
+    }
+</style>
+<style media="screen">
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            line-height: 40px;
+            display: table;
+            clear: both;
+            padding-top: 100px;
+        }
+
+        .ir-arriba {
+            display: none;
+            padding: 22px;
+            background: #ffc000;
+            font-size: 9px;
+            color: #fff;
+            cursor: pointer;
+            position: fixed;
+            bottom: 180px; /*es para subir el boton*/
+            right: 9px;
+            z-index: 1;
+            border-radius:100px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            $('.ir-arriba').click(function () {
+                $('body, html').animate({
+                    scrollTop: '0px'
+                }, 300);
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 0) {
+                    $('.ir-arriba').slideDown(300);
+                } else {
+                    $('.ir-arriba').slideUp(300);
+                }
+
+            });
+
+        });
+    </script>
+
+
+
+    <script type="text/javascript">(function () {
+        var ldk = document.createElement('script');
+        ldk.type = 'text/javascript';
+        ldk.async = true;
+        ldk.src = 'https://s.cliengo.com/weboptimizer/609fe24dc329b9002a31ef56/609fe24fc329b9002a31ef59.js?platform=registration';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ldk, s);
+    })();</script>
+
+    <span class="ir-arriba icon-arrow-up2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20"
+                                                height="24"><path fill-rule="evenodd"
+                                                                  d="M6.47 10.78a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0l5.25 5.25a.75.75 0 11-1.06 1.06L13 6.81v12.44a.75.75 0 01-1.5 0V6.81l-3.97 3.97a.75.75 0 01-1.06 0z"></path></svg></span>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="{% url '' %}">IKERGUST</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/my-order">Ordenes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/my-profile">Perfil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Cerrar sesión</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Más
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/send-feedback">Enviar Comentarios</a>
+                    <a class="dropdown-item" href="/contactus">Contactanos</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/aboutus">Sobre Nosotros</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <div class="dropdown show">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categorias
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="width: 300% ">
+                        <div class="container">
+                            <form action=" /search_categoria" method="get" class="form-inline mr-2 ">
+
+                                <div class="row">
+                                    {% for p in categoria %}
+                                        <div class="col-4  col-md-4">
+                                            <button class='dropdown-item ' name="query" id="query"
+                                                    value="{{ p.categoria }}"
+                                                    style='background-color:transparent;'>
+                                                <div style='text-align:left;'>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                              d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                                                    </svg>
+                                                    {{ p.categoria }}
+                                                </div>
+
+                                            </button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <div class="dropdown show">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Proveedores
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="width: 300% ">
+
+                        <div class="container">
+                            <form action="/search_proveedores" method="get" class="form-inline mr-2">
+
+                                <div class="row">
+                                    {% for p in proveedores %}
+                                        <div class="col-4  col-md-4">
+                                            <button class='dropdown-item ' name="query" id="query"
+                                                    value="{{ p.id }}"
+                                                    style='background-color:transparent;'>
+                                                <div style='text-align:left;'>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                              d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                                                    </svg>
+                                                    {{ p.proveedor_nombre }}
+                                                </div>
+
+                                            </button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/paquete">Paquetes</a>
+            </li>
+        </ul>
+        <form action="/search" method="get" class="form-inline mr-2">
+            <input class="form-control mr-sm-2" list="productos" type="search" placeholder="Buscar productos"
+                   name="query" id="query">
+            <datalist id="productos">
+                {% for p in productods_total %}
+                    <option value="{{ p.name }}">{{ p.name }}</option>
+                {% endfor %}
+            </datalist>
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+        </form>
+
+        <div data-aos="fade-left">
+            <ul class="nav navbar-nav navbar-right mr-2">
+                <li class="dropdown">
+                    <a type="button" href=" /cart" class="btn btn-success">
+                        <span class="item-number mr-3">{{ product_count_in_cart }}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-cart" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                        CART
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- content start-->
+{% block content %}
+
+{% endblock content %}
+<!-- content end-->
+<br><br><br>
+
+{% include "ecom/footer.html" %}
+
+<script>
+    $(document).ready(function () {
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "70%";
+
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.body.style.backgroundColor = "rgba(0,0,0,0)";
+        }
+
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

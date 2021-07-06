@@ -1,0 +1,214 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+{% block content %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <head>
+        <style media="screen">
+            a:link {
+                text-decoration: none;
+            }
+
+            h6 {
+                text-align: center;
+            }
+
+            .row {
+                margin: 20px;
+            }
+
+            .float {
+                position: fixed;
+                width: 70px;
+                height: 70px;
+                bottom: 60px;
+                right: 60px;
+                background-color: red;
+                color: #FFF;
+                border-radius: 50px;
+                text-align: center;
+                box-shadow: 3px 3px 3px #999;
+            }
+
+            .my-float {
+                margin-top: 22px;
+            }
+
+        </style>
+        <style media="screen">
+            .alert_warning {
+                margin-left: 25%;
+                margin-right: 25%;
+                padding: 20px;
+                background-color: #b92b27;
+                color: white;
+            }
+
+            .alert_success {
+                margin-left: 25%;
+                margin-right: 25%;
+                padding: 20px;
+                background-color: #2ecc71;
+                color: white;
+            }
+
+            .alert_info {
+                margin-left: 25%;
+                margin-right: 25%;
+                padding: 20px;
+                background-color: #ffc000;
+                color: white;
+            }
+
+            .w3-panel p {
+                padding-top: 10px;
+            }
+
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .closebtn:hover {
+                color: black;
+            }
+        </style>
+    </head>
+
+
+
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div class="alert_success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <strong>{{ message }}</strong><br>
+                    </div>
+                {% elif message.tags == 'info' %}
+
+                    <div class="alert alert-warning" role="alert">
+                        <strong>{{ message }}</strong> Tienes que verificar el listado de tus productos
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+                {% elif message.tags == 'warning' %}
+
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong></strong> {{ message }}
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    </div>
+
+
+                {% elif message.tags == 'error' %}
+                    <div class="bg-warning">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <strong>{{ message }}</strong><br>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+
+    <section class="mb-4">
+        <div class="card">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0 text-center">
+                    <strong>Listado De Inventario Productos</strong>
+                </h5>
+            </div>
+            <table class="table table-hover" id="example_table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Imagen</th>
+                    <th>Precio</th>
+                    <th>Descripción</th>
+                    <th>Proveedor</th>
+                    <th>Stock</th>
+                    <th>Actualizar</th>
+                    <th>Eliminar</th>
+                </tr>
+                </thead>
+                {% for p in products %}
+                    {% if p %}
+                        <tr>
+                            <td> {{ p.id }}</td>
+                            <td> {{ p.name }}</td>
+                            <td><img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px"
+                                     width="40px"/></td>
+                            <td>{{ p.price }}</td>
+                            <td>{{ p.description }}</td>
+                            <td>{{ p.proveedor }}</td>
+
+                            {% if p.stock >= 15 %}
+                                <td style="background-color:#D5F5E3;" class="text-center"><span
+                                        class="badge rounded-pill bg-success"> {{ p.stock }}</span></td>
+                            {% elif p.stock <= 14 and p.stock >= 5 %}
+                                <td style="background:#FCF3CF;" class="text-center"><span
+                                        class="badge rounded-pill bg-warning text-dark">
+                                        {{ p.stock }}</span></td>
+                            {% elif p.stock <= 4 and p.stock >= 0 %}
+                                <td style="background:#F2D7D5;" class="text-center"><span
+                                        class="badge rounded-pill bg-danger"> {{ p.stock }}</span></td>
+                            {% endif %}
+                            <td><a class="btn btn-primary btn-xs" href="{% url 'update-product' p.id %}"><i
+                                    class="fas fa-edit"></i></a>
+                                 <a class="btn btn-warning btn-xs" href="{% url 'editProduct' p.id %}"><i class="fas fa-camera"></i></a>
+                            </td>
+                            <td><a class="btn btn-danger btn-xs" href="{% url 'delete-product' p.id %}"><i
+                                    class="fas fa-trash-alt"></i></a></td>
+
+                        </tr>
+                    {% else %}
+                        <br><br><br>
+                        <h1>no hay productos</h1>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+            <!-- jQuery js-->
+            <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+            <!-- Bootstrap js -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                    crossorigin="anonymous"></script>
+            <!-- jQuery Datatable js -->
+            <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+            <!-- Bootstrap Datatable js -->
+            <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#example_table').DataTable({
+                            "language": {
+                                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                            },
+
+                        }
+                    );
+                });
+            </script>
+
+    <!-- add product floating button -->
+    <a href="/admin-add-product" class="float">
+        <i class="fa fa-plus my-float"></i>
+    </a>
+    <!--
+    developed By : sumit kumar
+    facebook : fb.com/sumit.luv
+    youtube : youtube.com/lazycoders
+    -->
+{% endblock content %}

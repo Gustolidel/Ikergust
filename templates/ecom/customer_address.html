@@ -1,0 +1,180 @@
+{% extends 'ecom/customer_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+            rel="stylesheet"
+    />
+    <br><br><br><br>
+
+    <h2 class="text-center py-4">Rellenar datos para realizar la compra</h2>
+    <div class="container card shadow p-3 mb-5 bg-white rounded">
+        <div class="row">
+            <div class="col col-lg-12">
+                {% if product_in_cart %}
+                    <form class="row g-3 needs-validation mr-5 ml-5 was-validated" novalidate method="post">
+                        {% csrf_token %}
+                        <div class="col-md-6 pt-4">
+                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                            <div class="input-group form-outline">
+
+                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                {% render_field addressForm.Email class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" %}
+                                <label for="validationCustomUsername" class="form-label">Email</label>
+                                <div class="invalid-feedback">Por favor Ingresar Email.</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pt-4">
+                            <label>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-telephone" viewBox="0 0 16 16">
+                                    <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+                                </svg>
+                                Movil</label>
+                            <div class="form-outline">
+                                {% render_field addressForm.Mobile|attr:'required:true, ' class="form-control" class="form-control" id="validationCustom02" %}
+                                <label for="validationCustom02" class="form-label">movil</label>
+                                <div class="valid-feedback">se mira bien!</div>
+                                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+                                <script>
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            Swal.fire(
+                                                '',
+                                                '{{message}}',
+                                                'info'
+                                            )
+                                         {% endfor %}
+                                    {% endif %}
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pt-4">
+                            <div class="form-outline">
+                                {% render_field addressForm.Address id="field5" class="form-control is-valid" id="validationTextarea" %}
+                                <label for="validationTextarea" class="form-label">Dirección</label>
+                                <div class="invalid-feedback">Por favor ingrese su dirección</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pt-4">
+                            <div class="form-outline">
+                                {% render_field addressForm.Dni|attr:"type:search"  class="form-control is-valid "  %}
+                                <label for="validationdni" class="form-label">DNI</label>
+                                <div class="invalid-feedback">Por favor ingrese su DNI</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pt-4">
+                            <div class="form-outline">
+
+                                {% render_field addressForm.Distrito class="form-select" aria-label="Default select example" %}
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 pt-4">
+                            <div class="form-outline">
+
+                                {% render_field addressForm.localidad class="form-select" aria-label="Default select example" %}
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 pt-3">
+                            <input class="btn btn-primary" type="submit" value="Proceder a Pagar"/>
+                        </div>
+                    </form>
+                {% else %}
+                    <br><br>
+                    <h1 style="text-align:center; color:red;"> Primero Agrega un Producto Al carrito de Compras </h1>
+                    <br><br><br><br><br><br><br><br><br><br>
+                {% endif %}
+            </div>
+            <div class="col col-lg-1">
+
+            </div>
+        </div>
+    </div>
+    <script>
+        function validarTextoEntrada(input, patron) {
+            var texto = input.value
+
+            var letras = texto.split("")
+
+            for (var x in letras) {
+                var letra = letras[x]
+
+                if (!(new RegExp(patron, "i")).test(letra)) {
+                    letras[x] = ""
+                }
+            }
+
+            input.value = letras.join("")
+        }
+
+        var txtPersonalizado = document.getElementById("txtPersonalizado")
+        var txtcontrasena = document.getElementById("txtcontraseña")
+        var txtmovil = document.getElementById("txtmovil")
+        var txtdireccion = document.getElementById("txtdireccion")
+        var txtdni = document.getElementById("usuario")
+
+        txtPersonalizado.addEventListener("input", function (event) {
+            validarTextoEntrada(this, "[0-9a-z]")
+        })
+        txtcontrasena.addEventListener("input", function (event) {
+            validarTextoEntrada(this, "[0-9a-z]")
+        })
+
+        txtdireccion.addEventListener("input", function (event) {
+            validarTextoEntrada(this, "^[A-Za-z 0-9\:\.]+$")
+        })
+        txtdni.addEventListener("input", function (event) {
+            validarTextoEntrada(this, "^[0-9]")
+        })
+
+
+        $(document).ready(function () {
+            $('input#validationCustom02')
+                .keypress(function (event) {
+                    if (event.which < 48 || event.which > 57 || this.value.length === 9) {
+                        return false;
+                    }
+                });
+        });
+
+
+        $(document).ready(function () {
+            $('input#validationdni')
+                .keypress(function (event) {
+                    if (event.which < 48 ||  this.value.length === 8) {
+                        return false;
+                    }
+                });
+        });
+
+
+    </script>
+
+    <!-- MDB -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+    ></script>
+{% endblock content %}

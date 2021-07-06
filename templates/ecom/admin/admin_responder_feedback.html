@@ -1,0 +1,42 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load widget_tweaks %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Responder el problema del cliente</title>
+    </head>
+    <body>
+
+    <div class="container">
+        <section class="section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="fw-bold">Responder el problema del cliente</h2>
+                            </div>
+                            <div class="card-body">
+                                <form method="post" style="margin-left:200px;margin-right:200px;">
+                                    {% csrf_token %}
+                                    <label for="salary">Responder problema</label>
+                                    {% render_field responderFeedback.descripcion_solucion class="form-control" %}
+                                    <div class="pt-3 text-center">
+                                        <input type="submit" class="btn btn-success" value="Responder">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+    </html>
+{% endblock content %}

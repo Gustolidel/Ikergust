@@ -1,0 +1,32 @@
+{% extends 'ecom/admin_base.html' %}
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>Producto {{ producto.name }}</h1>
+    <form method="post">
+         {% csrf_token %}
+        <div class="form-group">
+            <input type="hidden" name="id_producto" value="{{ producto.pk }}">
+            <label for="formGroupExampleInput">Cantidad</label>
+            <input name="stock" type="number" class="form-control" id="formGroupExampleInput"
+                   placeholder="agrega la cantidad de producto">
+        </div>
+        <div class="text-center pt-5">
+            <button class="btn btn-success" type="submit"> Añadir Cantidad </button>
+
+        </div>
+    </form>
+</div>
+</body>
+</html>
+{% endblock content %}

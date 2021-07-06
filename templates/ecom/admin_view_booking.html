@@ -1,0 +1,159 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+    <head>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+                integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+                crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+    </head>
+
+    <!--CSS para las tablas -->
+    <style>
+        .my-custom-scrollbar {
+            position: relative;
+            height: 200px;
+            overflow: auto;
+        }
+
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+    </style>
+
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title text-center font-bold">Total de Ordenes</h4>
+            </div>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
+                <table class="table table-bordered table-striped mb-0" id="example_table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Cliente</th>
+                        <th>Movil Cliente</th>
+                        <th>Dirección envio</th>
+                        <th>Producto</th>
+                        <th>Producto Imagen</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Actualizar Estado</th>
+                        <th>Detalle</th>
+                        <th>Eliminar</th>
+                    </tr>
+                    </thead>
+                    <!-- p for product, c for customer-->
+                    {% for product,customer,order in data %}
+                        <tr>
+                            {% for c in customer %}
+                                <td>{{ order.id }}</td>
+                                <td> {{ c.get_name }}</td>
+                                <td>{{ c.mobile }}</td>
+                                <td>{{ order.address }}</td>
+
+                            {% endfor %}
+                            {% for p in product %}
+                                <td> {{ p.name }}</td>
+                                <td><img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px"
+                                         width="40px"/></td>
+                                <td>{{ order.order_date }}</td>
+                                {% if order.status == 'Pendiente' %}
+                                    <td><span
+                                            class="label label-info text-info font-weight-bold">{{ order.status }}</span>
+                                    </td>
+                                {% elif order.status == 'Entregada' %}
+                                    <td><span
+                                            class="label label-success text-success font-weight-bold">{{ order.status }}</span>
+                                    </td>
+                                {% elif order.status == 'Fuera para entregar' %}
+                                    <td><span
+                                            class="label label-warning text-danger font-weight-bold">{{ order.status }}</span>
+                                    </td>
+                                {% else %}
+                                    <td><span
+                                            class="label label-primary text-primary font-weight-bold">{{ order.status }}</span>
+                                    </td>
+                                {% endif %}
+                                <td><a class="btn btn-primary btn-xs" href="{% url 'update-order' order.id %}"><i
+                                        class="fas fa-edit"></i></a></td>
+                                <td><a class="btn btn-warning btn-xs" href="{% url 'detalle-orden' order.id %}"><i
+                                        class="fas fa-share"></i></a></td>
+                                <td><a class="btn btn-danger btn-xs" href="{% url 'delete-order' order.id %}"><i
+                                        class="fas fa-trash-alt"></i></a></td>
+
+                            {% endfor %}
+
+
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('#example_table').DataTable({
+                        order: [
+                            [0, "desc"]
+                        ],
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                        },
+
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copy', 'print', 'excel', 'pdf'
+                        ]
+
+
+                    });
+                });
+
+            </script>
+        </div>
+    </div>
+
+
+
+    <!--Estilos y javascript para botones de tablas -->
+    <link href="plugins/datatables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet"/>
+    <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet"/>
+    <link href="plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
+
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- Bootstrap js -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <!-- jQuery Datatable js -->
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <!-- Bootstrap Datatable js -->
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+
+    <script src="plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="plugins/datatables/extensions/Responsive/js/responsive.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+
+
+
+{% endblock content %}

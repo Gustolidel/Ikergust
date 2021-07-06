@@ -1,0 +1,287 @@
+{% extends 'ecom/customer_base.html' %}
+<br><br><br>
+{% load static %}
+{% block content %}
+    <body>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <style media="screen">
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            line-height: 40px;
+            display: table;
+            clear: both;
+            padding-top: 100px;
+        }
+
+        .ir-arriba {
+            display: none;
+            padding: 22px;
+            background: #ffc000;
+            font-size: 9px;
+            color: #fff;
+            cursor: pointer;
+            position: fixed;
+            bottom: 180px; /*es para subir el boton*/
+            right: 9px;
+            z-index: 1;
+            border-radius: 100px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            $('.ir-arriba').click(function () {
+                $('body, html').animate({
+                    scrollTop: '0px'
+                }, 300);
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 0) {
+                    $('.ir-arriba').slideDown(300);
+                } else {
+                    $('.ir-arriba').slideUp(300);
+                }
+
+            });
+
+        });
+    </script>
+
+
+    <script type="text/javascript">(function () {
+        var ldk = document.createElement('script');
+        ldk.type = 'text/javascript';
+        ldk.async = true;
+        ldk.src = 'https://s.cliengo.com/weboptimizer/609fe24dc329b9002a31ef56/609fe24fc329b9002a31ef59.js?platform=registration';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ldk, s);
+    })();</script>
+
+    <span class="ir-arriba icon-arrow-up2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20"
+                                                height="24"><path fill-rule="evenodd"
+                                                                  d="M6.47 10.78a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0l5.25 5.25a.75.75 0 11-1.06 1.06L13 6.81v12.44a.75.75 0 01-1.5 0V6.81l-3.97 3.97a.75.75 0 01-1.06 0z"></path></svg></span>
+
+
+    {% if paquetes %}
+        <br>
+        <style>
+            @media only screen and (min-device-width: 960px) {
+
+                .col-md-3 {
+                    display: inline-block;
+                    margin-left: -4px;
+                }
+
+                #a {
+                    text-decoration: none;
+                    display: inline-block;
+                    padding: 8px 16px;
+                }
+
+                #a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                .previous {
+                    background-color: #f1f1f1;
+                    color: black;
+                }
+
+                .next {
+                    background-color: #4CAF50;
+                    color: white;
+                }
+
+                .round {
+                    border-radius: 50%;
+                }
+
+                .nextPreviousButtons {
+                    text-align: center;
+                }
+            }
+
+        </style>
+
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
+
+        <br><br>
+
+        <div data-aos="fade-right">
+            <div class="bg-image hover-overlay hover-zoom hover-shadow ripple">
+
+                <img class="card-img-top wow fadeInUp"
+                     src="https://www.sistemasyprogramas.com/modules/tm_imageslider/views/img/1473a3630291d79a5a8e199dbf655d0090127a7c_Web-banner-SISTs-y-PROGs.jpg"
+                     alt="">
+                <a href="#!">
+                    <div class="mask" style="background-color: rgba(57, 192, 237, 0.2)"></div>
+                </a>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="mr-5 ml-5">
+            <div class='row'>
+                {% for p in paquetes|slice:"0:" %}
+
+                    <div class=" col-lg-3 p-b-35 isotope-item men {{ col_class_set }}">
+                        <!-- Block2 -->
+                        <div class="card hover-shadow" style="margin-top: 15px;">
+                            <div class="center">
+                                <a href="#">
+                                    <div class="bg-image hover-zoom">
+                                        <div class="mr-4 ml-4">
+                                            <img src="https://i.ibb.co/WD55W3D/guardar.png"
+                                                 class=" img-fluid  img-responsive ml-4"
+                                                 style="position: absolute; margin-top: 15px; height: 60px; width: 60px; z-index: 1; float:right; clear:right;">
+
+                                            <img src="{% static p.paquete_imagen.url %}" alt="product pic"
+                                                 class="mx-auto d-block img-fluid img-responsive bg-image hover-zoom w-100"
+                                                 style="width: 100%; display: block; margin-left: auto; margin-right: auto;margin: auto;height: 300px">
+                                        </div>
+
+                                </a>
+                            </div>
+
+                            <div class="card-body text-center">
+                                <h4 class="text-center text-uppercase "
+                                    style="color: #3B5998">{{ p.name }}</h4>
+                                <p class="small text-muted text-uppercase mb-2 text-center text-uppercase ">
+
+                                <ul>
+                                    {% for pro in p.producto_id.all %}
+                                        <li>
+                                            {{ pro.name }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                </p>
+
+                                <h6 class="mb-3 text-center">
+
+                                    <span class="text-danger mr-1">S/. {{ p.precio }}</span>
+
+
+                                </h6>
+                                <div class="star-rating text-center text-uppercase ">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item"><i
+                                                class="fas fa-star fa-sm text-primary"></i></li>
+                                        <li class="list-inline-item"><i
+                                                class="fas fa-star fa-sm text-primary"></i></li>
+                                        <li class="list-inline-item"><i
+                                                class="fas fa-star fa-sm text-primary"></i></li>
+                                        <li class="list-inline-item"><i
+                                                class="far fa-star fa-sm text-primary"></i></li>
+                                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                                    </ul>
+                                </div>
+
+                                <hr>
+
+
+                                <a class="btn btn-primary   btn-sm mr-1 mb-2  "
+                                   href="{% url 'add-to-cart' p.id %}"> <i
+                                        class="fas fa-shopping-cart pr-2"></i>Añadir
+                                </a>
+
+                                <a type="button" href="{% url 'detalle-producto' p.id %}"
+                                   class="btn btn-light btn-sm mr-1 mb-2 text-center">
+                                    <i class="fas fa-info-circle pr-2"></i>Detalle
+                                </a>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+
+                {% endfor %}
+        </div>
+        </div>
+        </div>
+
+    {% else %}
+        <h3 style="text-align:center; color:yellow;">No se escuentra nada buscado</h3>
+    {% endif %}
+
+
+
+    <!--Jquery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!--Floating WhatsApp css-->
+    <link rel="stylesheet"
+          href="https://rawcdn.githack.com/rafaelbotazini/floating-whatsapp/3d18b26d5c7d430a1ab0b664f8ca6b69014aed68/floating-wpp.min.css">
+    <!--Floating WhatsApp javascript-->
+    <script type="text/javascript"
+            src="https://rawcdn.githack.com/rafaelbotazini/floating-whatsapp/3d18b26d5c7d430a1ab0b664f8ca6b69014aed68/floating-wpp.min.js"></script>
+    <!--Div where the WhatsApp will be rendered-->
+
+    <style>
+
+        #WAButton {
+
+
+            border-radius: 90px; /* Borde del boton */
+            position: fixed;
+            bottom: 100px;
+            transition: all 300ms ease 0ms;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        #WAButton:hover {
+            background-color: #1a88ff; /* Color de fondo al pasar el cursor */
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-7px);
+
+        }
+
+        ir-arriba:hover {
+            background-color: #1a88ff; /* Color de fondo al pasar el cursor */
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-7px);
+        }
+
+        @media only screen and (max-width: 600px) {
+            .btn-flotante {
+                font-size: 14px;
+                padding: 12px 20px;
+                bottom: 20px;
+                right: 20px;
+                bottom: 100px;
+            }
+        }
+
+
+    </style>
+    <div id="WAButton"></div>
+    <script>
+        $(function () {
+            $('#WAButton').floatingWhatsApp({
+                phone: '934333333', //WhatsApp Business phone number International format-
+                //Get it with Toky at https://toky.co/en/features/whatsapp.
+                headerTitle: 'Chat con WhatsApp!', //Popup Title
+                popupMessage: 'Hola, En que podemos ayudarte?', //Popup Message
+                showPopup: true, //Enables popup display
+                buttonImage: '<img src="https://rawcdn.githack.com/rafaelbotazini/floating-whatsapp/3d18b26d5c7d430a1ab0b664f8ca6b69014aed68/whatsapp.svg" />', //Button Image
+                //headerColor: 'crimson', //Custom header color
+                //backgroundColor: 'crimson', //Custom background button color
+                position: "right"
+            });
+        });
+    </script>
+
+    </body>
+{% endblock content %}

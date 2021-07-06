@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Enviar Comentarios/problemas</title>
+
+</head>
+
+<body>
+
+{% if request.user.is_authenticated %}
+    {% include "ecom/customer_navbar.html" %}
+{% else %}
+    {% include "ecom/navbar.html" %}
+{% endif %}
+<br><br><br><br>
+<center>
+    <h3 class='alert alert-success py-3'>Envíenos sus valiosos comentarios!</h3>
+    <div class="container card shadow p-3 mb-5 bg-white rounded pt-3">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="form-label" for="form3Example1">ID Usuario</label>
+                        <input type="text" name="usuario" id="form3Example1" value="{{ request.user.id }}"
+                               class="form-control" readonly/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="form-label" for="form3Example2">Nombre del Cliente</label>
+                        <input type="text" id="form3Example2" name="nombre" class="form-control"
+                               value="{{ request.user.username }}"readonly/>
+
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <label class="form-label" for="form3Example2">Tipo del problemas</label>
+            <select class="custom-select" name="tipoproblema" required>
+                <option selected>Abrir este menú de selección</option>
+                <option value="1">Demora de Producto</option>
+                <option value="2">Mal servicio</option>
+                <option value="3">Otro</option>
+            </select>
+            <br>
+            <div class="form-group mb-4 pt-3">
+                <label class="form-label" for="form3Example3">Describa su Problema</label>
+                <textarea ows="10" pattern="[A-Za-z0-9]+" cols="50" name="feedback" id="form3Example3" class="form-control" maxlength="300"
+                          required></textarea>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary ">Enviar</button>
+        </form>
+    </div>
+
+</center>
+{% include "ecom/footer.html" %}
+</body>
+<!--
+developed By : sumit kumar
+facebook : fb.com/sumit.luv
+youtube : youtube.com/lazycoders
+-->
+
+</html>

@@ -1,0 +1,136 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load widget_tweaks %}
+{% block content %}
+<style media="screen">
+    a:link {
+        text-decoration: none;
+    }
+
+    h6 {
+        text-align: center;
+    }
+
+    .row {
+        margin: 20px;
+    }
+
+    .float {
+        position: fixed;
+        width: 70px;
+        height: 70px;
+        bottom: 60px;
+        right: 60px;
+        background-color: red;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        box-shadow: 3px 3px 3px #999;
+    }
+
+    .my-float {
+        margin-top: 22px;
+    }
+
+    .my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+
+</style>
+
+<body>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+
+<section class="mb-4">
+    <div class="card">
+        <div class="card-header text-center py-3">
+            <h5 class="mb-0 text-center">
+                <strong>Control paquetes promocionales</strong>
+            </h5>
+        </div>
+        <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
+            <table class="table table-hover text-nowrap table table-striped " id="example_table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Productos</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">imagen</th>
+                    <th scope="col">Opción</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for p in paquete %}
+                <tr>
+                    <td>{{ p.id }}</td>
+                    <td>
+                        <ul>
+                            {% for pro in p.producto_id.all %}
+                                <li>
+                                    {{ pro.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+
+                    {% if p.paquete_imagen %}
+                        <td><img src="{% static p.paquete_imagen.url %}" alt="Profile Pic" height="40px"
+                                 width="40px"/></td>
+                    {% else %}
+                    <td><img src="https://cdn.pixabay.com/photo/2016/03/31/18/35/icons-1294492_1280.png" height="40px"
+                             width="40px"/></td>
+                    {% endif %}
+                    <td class="text-primary text-bold font-weight-bold" style="">{{ p.titulo }}</td>
+                    <td class="font-weight-bold"> S/ .{{ p.precio }}</td>
+                    <td><a class="btn btn-primary btn-xs" href="{% url 'Actualizar-paquete' p.id %}"><i
+                            class="fas fa-edit"></i></a></td>
+
+
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+<!-- jQuery js-->
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<!-- Bootstrap js -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<!-- jQuery Datatable js -->
+<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<!-- Bootstrap Datatable js -->
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#example_table').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                },
+
+            }
+        );
+    });
+</script>
+
+</body>
+</html>
+{% endblock content %}

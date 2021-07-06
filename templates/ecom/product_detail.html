@@ -1,0 +1,182 @@
+{% extends 'ecom/homebase.html' %}
+
+
+{% load static %}
+{% block content %}
+    <html lang="en">
+
+    <head>
+        <title>Smartphone MTK6572</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <!-- Set the viewport width to device width for mobile -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+        <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+
+        <style>
+
+
+            p, .caption h4, label, table, .panel, #contactpage > h2.success, #contactpage h2.error {
+                font-size: 15px !important;
+            }
+
+            span:hover {
+                color: #1a88ff;
+                font-weight: bold;
+            }
+
+            p:hover {
+                color: #1a88ff;
+                font-weight: bold;
+            }
+
+            h2 {
+                font-size: 30px !important;
+            }
+
+            label:hover {
+
+                font-weight: bold;
+            }
+
+
+        </style>
+
+
+    </head>
+
+    <body>
+
+    <!-- Page Content -->
+
+    <br><br><br>
+
+    <div class="container pt-5">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-12">
+                <h3 class="page-header">{{ object.name }} </h3>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+
+                <!-- There's only One image -->
+                <div class="">
+                    <div class="bg-image hover-zoom">
+                        {% if object.estado == "Oferta" %}
+                            <img src="https://i.ibb.co/WD55W3D/guardar.png"
+                                 class=" img-fluid  img-responsive ml-4"
+                                 style="position: absolute; margin-top: 20px; height: 100px; width: 100px; z-index: 1; float:right; clear:right;">
+                            <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+
+                            <script>
+                                window.onload = function ejemplo() {
+
+                                    party.confetti(party.Rect.fromScreen(), {
+                                        // We want to randomize the amount of confetti that is emitted, so we
+                                        // create a range from 0 to 20. When the particles are created, this
+                                        // variation is evaluated, randomizing the amount of spawned particles.
+                                        count: party.variation.range(100, 100),
+                                        size: party.variation.range(500, 1000),
+                                        shapes: ["star", "roundedSquare"],
+
+                                    });
+
+                                }
+
+                            </script>
+                        {% elif object.estado == "Agotado" %}
+                            <img src="https://www.pngkey.com/png/full/414-4144576_agotado.png"
+                                 class=" img-fluid  img-responsive ml-4"
+                                 style="position: absolute; margin-top: 60px; height: 60px; width: 80px; z-index: 1; float:right; clear:right;">
+                        {% endif %}
+                        <img class="img-fluid mx-auto d-block image " src="{% static object.product_image.url %}">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6  hover">
+
+
+                <!-- Product Price  -->
+                <div class="form-group price_elem row pt-2 ">
+                    <label class="col-sm-3 col-md-3 form-control-label nopaddingtop">Precio:</label>
+                    <div class="col-sm-8 col-md-9">
+                        <span class="text-bold" style="font-weight: bold;">S/. {{ object.price }}</span>
+
+
+                    </div>
+                </div>
+
+
+                <div class="form-group product-stock product-out-stock row hidden">
+                    <label class="col-sm-3 col-md-3 form-control-label">Descuento:</label>
+                    <div class="col-sm-8 col-md-9">
+                        <span class="product-form-price">S/. {{ object.product_precio_discuento }}</span>
+                    </div>
+                </div>
+
+                <!-- Not Available -->
+                <div class="form-group product-stock product-unavailable row hidden">
+                    <label class="col-sm-3 col-md-3 form-control-label">Categoria:</label>
+                    <div class="col-sm-8 col-md-9">
+                        <span class="product-form-price">{{ object.categoria }}</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-md-3 form-control-label">Codigo de fabrica:</label>
+                    <div class="col-sm-8 col-md-9 description">
+                        <p>{{ object.codigo_fabrica }}</p>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-md-3 form-control-label">Garantia:</label>
+                    <div class="col-sm-9 col-md-9">
+                        <p>{{ object.garantia }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-md-3 form-control-label">Marca:</label>
+                    <div class="col-sm-9 col-md-9">
+                        <p>{{ object.marca }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-md-3 form-control-label">Descripcion:</label>
+                    <div class="col-sm-9 col-md-9">
+                        <p>{{ object.description }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-md-3 form-control-label">Proveedor:</label>
+                    <div class="col-sm-9 col-md-9">
+                        <p>{{ object.proveedor }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <a type="button" href="{% url 'add-to-cart' object.id %}" class="btn btn-primary btn-lg btn-block">Agregar</a>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <br><br>
+
+
+    </body>
+
+    </html>
+{% endblock content %}

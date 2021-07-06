@@ -1,0 +1,66 @@
+<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+
+<script>
+    window.onload = function ejemplo() {
+
+        party.confetti(party.Rect.fromScreen(), {
+            // We want to randomize the amount of confetti that is emitted, so we
+            // create a range from 0 to 20. When the particles are created, this
+            // variation is evaluated, randomizing the amount of spawned particles.
+            count: party.variation.range(100, 100),
+            size: party.variation.range(500, 1000),
+            shapes: ["star", "roundedSquare"],
+
+        });
+
+    }
+
+</script>
+{% extends 'ecom/customer_base.html' %}
+{% load static %}
+
+{% block content %}
+    <head>
+
+    </head>
+    <style media="screen">
+
+
+    </style>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <br><br><br>
+    <div class="container text-center">
+        <img class="img-fluid" style="height: 250px; width: 320px;"
+             src="https://cdn.dribbble.com/users/1280935/screenshots/6974685/media/ec4c386222b837da0ff6eabec3f59ba3.gif">
+        <div class="card py-3">
+            <div data-aos="fade-right" class="pt-2">
+                <h3 class="display-4">Su compra esta lista!</h3>
+            </div>
+            <p class="lead">Por favor dar click en el boton de abajo para continuar.</p>
+            <hr class="my-4">
+
+            <div class="container py-3">
+
+
+                <div class="col-sm " data-aos="fade-up">
+                    <a class="btn btn-success btn-lg" href="/payment-success" role="button">Aceptar Compra
+                        Finalizada</a>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <br>
+
+
+{% endblock content %}

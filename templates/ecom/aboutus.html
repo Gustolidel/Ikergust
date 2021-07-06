@@ -1,0 +1,196 @@
+
+  <!--Main Navigation-->
+  <header>
+<link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+            rel="stylesheet"
+    />
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+    ></script>
+
+
+
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+  AOS.init();
+</script>
+
+  {%if request.user.is_authenticated%}
+    {% include "ecom/customer_navbar.html" %}
+  {%else%}
+    {% include "ecom/navbar.html" %}
+  {%endif%}
+    <!-- Intro Section -->
+    <div class="view jarallax" data-jarallax='{"speed": 0.2}' style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient3.png); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+      <div class="mask rgba-indigo-slight">
+        <div class="container h-100 d-flex justify-content-center align-items-center">
+          <div class="row pt-5 mt-3">
+            <div class="col-md-12 mb-3">
+              <div class="intro-info-content text-center" data-aos="fade-down-left">
+                        <h1 class="display-3 blue-text mb-5 " data-wow-delay="0.3s">NOSOTROS</h1>
+                <h5 class="text-uppercase blue-text mb-5 mt-1 font-weight-bold wow fadeInDown" data-wow-delay="0.3s">Ikergust Service & Technology E.I.R.L.</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main Layout-->
+  <main>
+
+    <div class="container">
+
+      <!--Section: Team v.1-->
+      <section class="text-center team-section">
+
+        <!--Grid row-->
+        <div class="row text-center">
+
+          <!--Grid column-->
+          <div class="col-md-12 mb-4" style="margin-top: -100px;">
+
+            <div class="avatar mx-auto" data-aos="flip-up">
+              <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg" class="img-fluid rounded-circle z-depth-1" alt="First sample avatar image">
+            </div>
+            <h3 class="my-3 font-weight-bold">
+              <strong>Mario Delgado</strong>
+            </h3>
+            <h6 class="font-weight-bold teal-text mb-4">Gerente de TI</h6>
+
+            <!--Facebook-->
+            <a class="p-2 m-2 fa-lg fb-ic">
+              <i class="fab fa-facebook-f grey-text"> </i>
+            </a>
+            <!--Twitter-->
+            <a class="p-2 m-2 fa-lg tw-ic">
+              <i class="fab fa-twitter grey-text"> </i>
+            </a>
+            <!--Instagram-->
+            <a class="p-2 m-2 fa-lg ins-ic">
+              <i class="fab fa-instagram grey-text"> </i>
+            </a>
+
+          </div>
+          <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+      </section>
+      <!--Section: Team v.1-->
+
+           <hr class="my-5">
+
+            <!-- Section: Features v.1 -->
+            <section id="products" class="text-center wow fadeIn" data-wow-delay="0.3s">
+
+                <!-- Section heading -->
+                <h1 class="font-weight-bold text-center h1 my-5">We create awesome products</h1>
+
+                <!-- Grid row -->
+                <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 mb-4" data-aos="zoom-in">
+                        <i class="fas fa-4x fa-chart-area text-info"></i>
+                        <h4 class="font-weight-bold my-4">Analytics</h4>
+                        <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda deleniti hic.</p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 mb-4" data-aos="zoom-in">
+                        <i class="fas fa-4x fa-pencil-alt text-primary"></i>
+                        <h4 class="font-weight-bold my-4">Design</h4>
+                        <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda deleniti hic.</p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 mb-4" data-aos="zoom-in">
+                        <i class="fas fa-4x fa-laptop text-info"></i>
+                        <h4 class="font-weight-bold my-4">Development</h4>
+                        <p class="grey-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit maiores nam, aperiam minima assumenda deleniti hic.</p>
+                    </div>
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row -->
+
+            </section>
+            <!-- Section: Features v.1 -->
+
+            <hr class="my-5">
+
+
+
+    </div>
+
+  </main>
+  <!--Main Layout-->
+
+  <script>
+          new WOW().init();
+
+    // MDB Lightbox Init
+    $(function () {
+      $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
+    });
+  </script>
+  <style>
+          html,
+    body,
+    header,
+    .jarallax {
+      height: 700px;
+    }
+
+    @media (max-width: 740px) {
+      html,
+      body,
+      header,
+      .jarallax {
+        height: 100vh;
+      }
+    }
+
+     @media (min-width: 800px) and (max-width: 850px) {
+      html,
+      body,
+      header,
+      .jarallax {
+        height: 100vh;
+      }
+    }
+
+    @media (min-width: 560px) and (max-width: 660px) {
+      header .jarallax h5 {
+        display: none !important;
+      }
+    }
+
+    .page-footer {
+      margin-top: 0px;
+      padding-top: 0px;
+    }
+
+  </style>

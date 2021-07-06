@@ -1,0 +1,62 @@
+{% extends 'ecom/admin_base.html' %}
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load widget_tweaks %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <div class="container pt-3">
+        <section class="section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="fw-bold">Crear paquete promocional</h2>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" enctype="multipart/form-data">
+
+                                    <!-- Security token -->
+                                    {% csrf_token %}
+
+                                    <style>
+                                        .anyClass {
+                                            height: 150px;
+                                            overflow-y: scroll;
+                                        }
+                                    </style>
+                                    <div class="form-group pt-3 anyClass">
+                                        <div class="form-check card">
+                                            {% render_field form.producto_id %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group pt-3">
+                                        {% render_field form.titulo class="form-control" placeholder="Ingresar Titulo" %}
+                                    </div>
+                                    <div class="form-group pt-3">
+                                        {% render_field form.precio class="form-control" placeholder="Ingresar Precio" %}
+                                    </div>
+                                    <div class="form-group pt-3">
+                                        {% render_field form.paquete_imagen class="form-control" placeholder="Ingresar Imagen" %}
+                                    </div>
+                                    <div class="pt-3 text-center">
+                                        <input type="submit" value="Agregar" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+    </html>
+{% endblock content %}

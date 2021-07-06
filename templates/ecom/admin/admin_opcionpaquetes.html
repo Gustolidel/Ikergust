@@ -1,0 +1,48 @@
+{% extends 'ecom/admin_base.html' %}
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% load widget_tweaks %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <div class="container text-center pt-3">
+        <div class="row">
+            <div class="col-lg-2">
+
+            </div>
+            <div class="col-lg-4  pt-3">
+                <div class="card" >
+                    <img class="card-img-top"
+                         src="https://media.istockphoto.com/vectors/pile-of-stacked-sealed-goods-cardboard-boxes-vector-id513235144?k=6&m=513235144&s=612x612&w=0&h=TFzcOJ9Z8m40sEE9w7sLyhWxd8zsWhIYq7ldTpusfSg="
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Puedes visualizar el control de salidas y entradas del productos.</p>
+                        <a href="/Ver-paquete" class="btn btn-primary text-center">Ver Paquetes</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-4 pt-3">
+                <div class="card" >
+                    <img class="card-img-top" src="https://png.pngtree.com/png-vector/20190121/ourlarge/pngtree-receipt-delivery-commodity-package-png-image_519886.jpg"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Actualiza el stock de tu productos que se estan acabando.</p>
+                        <a href="/Agregar-paquete"  class="btn btn-primary text-center">hacer un paquete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+    </div>
+    </body>
+    </html>
+{% endblock content %}
