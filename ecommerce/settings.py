@@ -144,7 +144,6 @@ STATICFILES_DIRS=[
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 
-
 LOGIN_REDIRECT_URL='/afterlogin'
 EMAIL_HOST = 'smtp.googlemail.com'
 EMAIL_PORT = 587
