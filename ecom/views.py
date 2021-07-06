@@ -18,6 +18,7 @@ import os
 from django.shortcuts import get_object_or_404, redirect, reverse
 import json
 from django.views import generic
+from cloudinary.forms import cl_init_js_callbacks
 
 def home_view(request):
     products = models.Product.objects.all().order_by('-id')[:12]

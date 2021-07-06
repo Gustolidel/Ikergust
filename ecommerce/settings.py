@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
@@ -26,7 +29,7 @@ from rest_framework.settings import api_settings
 SECRET_KEY = '#vw(03o=(9kbvg!&2d5i!2$_58x@_-3l4wujpow6(ym37jxnza'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #ALLOWED_HOSTS = []
 
@@ -132,18 +135,24 @@ USE_TZ = True
 
 STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/static/'
+MEDIA_URL = '/product_image/'
 
 STATICFILES_DIRS=[
     STATIC_DIR, 'static'
 ]
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/product_image')
 
-
+cloudinary.config(
+  cloud_name = "dp8ko7h99",
+  api_key = "334211188739348",
+  api_secret = "zoFG8RnBJqTWyzCkf8r3fGopCXo",
+)
 
 LOGIN_REDIRECT_URL='/afterlogin'
 EMAIL_HOST = 'smtp.googlemail.com'

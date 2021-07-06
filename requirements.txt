@@ -4,6 +4,7 @@ asgiref==3.3.4
 Babel==2.9.1
 certifi==2021.5.30
 chardet==4.0.0
+cloudinary==1.26.0
 colorama==0.4.4
 Django==3.2.4
 django-phonenumber-field==5.2.0

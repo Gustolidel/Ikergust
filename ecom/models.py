@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User, Group
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
@@ -84,7 +85,7 @@ class Product(models.Model):
         ('Agotado', 'Agotado'),
     )
     name=models.CharField(max_length=300)
-    product_image= models.ImageField(upload_to='product_image/',null=True,blank=True,default="default.jpg")
+    product_image= CloudinaryField('image')
     codigo_fabrica = models.CharField(max_length=50, null=True)
     price = models.IntegerField()
     description=models.CharField(max_length=300)
