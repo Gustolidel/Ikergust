@@ -29,7 +29,7 @@ from rest_framework.settings import api_settings
 SECRET_KEY = '#vw(03o=(9kbvg!&2d5i!2$_58x@_-3l4wujpow6(ym37jxnza'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 #ALLOWED_HOSTS = []
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'ecom',
     'widget_tweaks',
@@ -135,7 +136,7 @@ USE_TZ = True
 
 STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_URL = '/static/'
 
