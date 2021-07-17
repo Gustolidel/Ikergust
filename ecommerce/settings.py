@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -119,11 +120,11 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS=[STATIC_DIR,]
+STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS=[os.path.join(BASE_DIR, 'static')]
 
-
-MEDIA_ROOT=os.path.join(BASE_DIRx,'static')
+MEDIA_URL= '/product_image/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'static/product_image')
 
 
 LOGIN_REDIRECT_URL='/afterlogin'
