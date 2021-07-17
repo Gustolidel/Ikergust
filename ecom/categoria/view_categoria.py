@@ -1,11 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View, CreateView, TemplateView
 from django.http import JsonResponse
 from ecom.models import Categoria
 
+from django.utils.decorators import method_decorator
+
+
+def admin_required(function):
+    def wrap(request, *args, **kwargs):
+        if not request.user.groups.filter(name='Administrador').exists():
+            return redirect('')
+        return function(request, *args, **kwargs)
+
+    return wrap
 
 class CrudView(TemplateView):
     template_name = 'ecom/admin_categoria.html'
+
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CrudView, self).dispatch(request, *args, **kwargs)
 
 
     def get_context_data(self, **kwargs):
@@ -20,6 +35,13 @@ class CrudView(TemplateView):
 
 
 class CreateCrudUser(View):
+
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CreateCrudUser, self).dispatch(request, *args, **kwargs)
+
+
     def  get(self, request):
         name1 = request.GET.get('Categoria', None)
 
@@ -37,6 +59,12 @@ class CreateCrudUser(View):
         return JsonResponse(data)
 
 class DeleteCrudUser(View):
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DeleteCrudUser, self).dispatch(request, *args, **kwargs)
+
+
     def  get(self, request):
         id1 = request.GET.get('id', None)
         Categoria.objects.get(id=id1).delete()
@@ -47,6 +75,11 @@ class DeleteCrudUser(View):
 
 
 class UpdateCrudUser(View):
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(UpdateCrudUser, self).dispatch(request, *args, **kwargs)
+
     def  get(self, request):
         id1 = request.GET.get('id', None)
         name1 = request.GET.get('Categoria', None)

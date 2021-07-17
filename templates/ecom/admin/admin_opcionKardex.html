@@ -4,45 +4,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {% load widget_tweaks %}
 {% block content %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-    <div class="container text-center pt-3">
-        <div class="row">
-            <div class="col-lg-2">
+    {% if request.user.is_staff %}
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Title</title>
+        </head>
+        <body>
+        <div class="container text-center pt-3">
+            <div class="row">
+                <div class="col-lg-2">
 
-            </div>
-            <div class="col-lg-4  pt-3">
-                <div class="card" >
-                    <img class="card-img-top"
-                         src="data:image/png;base64,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"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-text">Puedes visualizar el control de salidas y entradas del productos.</p>
-                        <a href="/kardex-view" class="btn btn-primary text-center">Ver Kardex</a>
+                </div>
+                <div class="col-lg-4  pt-3">
+                    <div class="card">
+                        <img class="card-img-top"
+                             src="data:image/png;base64,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"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text">Puedes visualizar el control de salidas y entradas del productos.</p>
+                            <a href="/kardex-view" class="btn btn-primary text-center">Ver Kardex</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 pt-3">
+                    <div class="card">
+                        <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/418/418486.png"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text">Actualiza el stock de tu productos que se estan acabando.</p>
+                            <a href="/buscar-categoria-kardex" class="btn btn-primary text-center">Agregar Producto</a>
+                        </div>
                     </div>
                 </div>
+                <div class="col-lg-2">
 
-            </div>
-            <div class="col-lg-4 pt-3">
-                <div class="card" >
-                    <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/418/418486.png"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-text">Actualiza el stock de tu productos que se estan acabando.</p>
-                        <a href="/buscar-categoria-kardex"  class="btn btn-primary text-center">Agregar Producto</a>
-                    </div>
                 </div>
-            </div>
-            <div class="col-lg-2">
-
             </div>
         </div>
-    </div>
-    </body>
-    </html>
+        </body>
+        </html>
+    {% endif %}
 {% endblock content %}

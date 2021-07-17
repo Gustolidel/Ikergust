@@ -1,11 +1,24 @@
+from django.shortcuts import redirect
 from django.views.generic import View, CreateView, TemplateView
 from django.http import JsonResponse
 from ecom.models import Proveedor
 
+from django.utils.decorators import method_decorator
+
+
+def admin_required(function):
+    def wrap(request, *args, **kwargs):
+        if not request.user.groups.filter(name='Administrador').exists():
+            return redirect('')
+        return function(request, *args, **kwargs)
+    return wrap
 
 class CrudView_Proveedor(TemplateView):
     template_name = 'ecom/admin_proveedor.html'
 
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CrudView_Proveedor, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -14,7 +27,13 @@ class CrudView_Proveedor(TemplateView):
 
 
 
+
 class CreateCrudUser_proveedor(View):
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(CreateCrudUser_proveedor, self).dispatch(request, *args, **kwargs)
+
     def  get(self, request):
         name1 = request.GET.get('proveedor_nombre', None)
         direccion = request.GET.get('direccion', None)
@@ -33,6 +52,11 @@ class CreateCrudUser_proveedor(View):
         return JsonResponse(data)
 
 class DeleteCrudUser_proveedor(View):
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(DeleteCrudUser_proveedor, self).dispatch(request, *args, **kwargs)
+
     def  get(self, request):
         id1 = request.GET.get('id', None)
         Proveedor.objects.get(id=id1).delete()
@@ -43,6 +67,11 @@ class DeleteCrudUser_proveedor(View):
 
 
 class UpdateCrudUser_proveedor(View):
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(UpdateCrudUser_proveedor, self).dispatch(request, *args, **kwargs)
+
     def  get(self, request):
         id1 = request.GET.get('id', None)
         name1 = request.GET.get('proveedor_nombre', None)

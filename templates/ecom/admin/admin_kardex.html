@@ -5,133 +5,134 @@
       rel="stylesheet">
 {% load widget_tweaks %}
 {% block content %}
-    <style media="screen">
+    {% if request.user.is_staff %}
+        <style media="screen">
 
-        h5 {
-            font-family: 'Signika Negative', sans-serif;
-            font-family: 'Viga', sans-serif;
-        }
-
-
-        p {
-            font-family: 'Signika Negative', sans-serif;
-            font-family: 'Viga', sans-serif;
-        }
-
-        a:link {
-            text-decoration: none;
-        }
-
-        h6 {
-            text-align: center;
-        }
-
-        .row {
-            margin: 20px;
-        }
+            h5 {
+                font-family: 'Signika Negative', sans-serif;
+                font-family: 'Viga', sans-serif;
+            }
 
 
-        .float {
-            position: fixed;
-            width: 70px;
-            height: 70px;
-            bottom: 60px;
-            right: 60px;
-            background-color: red;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            box-shadow: 3px 3px 3px #999;
-        }
+            p {
+                font-family: 'Signika Negative', sans-serif;
+                font-family: 'Viga', sans-serif;
+            }
 
-        .my-float {
-            margin-top: 22px;
-        }
+            a:link {
+                text-decoration: none;
+            }
 
-        .my-custom-scrollbar {
-            position: relative;
-            height: 200px;
-            overflow: auto;
-        }
+            h6 {
+                text-align: center;
+            }
 
-        .table-wrapper-scroll-y {
-            display: block;
-        }
-
-    </style>
-
-    <body>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+            .row {
+                margin: 20px;
+            }
 
 
-    <section class="mb-4">
-        <div class="card">
-            <div class="card-header text-center py-3">
-                <h5 class="mb-0 text-center">
-                    <strong>Control de Salida e Ingresos KARDEX</strong>
-                </h5>
-            </div>
-            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
-                <table class="table table-hover text-nowrap table table-striped " id="example_table">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">descripcion</th>
-                        <th scope="col">ingreso</th>
-                        <th scope="col">salida</th>
-                        <th scope="col">producto</th>
-                        <th scope="col">dia</th>
-                        <th scope="col">hora</th>
+            .float {
+                position: fixed;
+                width: 70px;
+                height: 70px;
+                bottom: 60px;
+                right: 60px;
+                background-color: red;
+                color: #FFF;
+                border-radius: 50px;
+                text-align: center;
+                box-shadow: 3px 3px 3px #999;
+            }
 
-                    </tr>
-                    </thead>
-                    <tbody>
+            .my-float {
+                margin-top: 22px;
+            }
 
-                    {% for k in kardex %}
+            .my-custom-scrollbar {
+                position: relative;
+                height: 200px;
+                overflow: auto;
+            }
+
+            .table-wrapper-scroll-y {
+                display: block;
+            }
+
+        </style>
+
+        <body>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-header text-center py-3">
+                    <h5 class="mb-0 text-center">
+                        <strong>Control de Salida e Ingresos KARDEX</strong>
+                    </h5>
+                </div>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
+                    <table class="table table-hover text-nowrap table table-striped " id="example_table">
+                        <thead class="thead-light">
                         <tr>
-                            <td>{{ k.id }}</td>
-                            <td>{{ k.descripcion }}</td>
-                            <td class="text-primary text-bold font-weight-bold" style="">{{ k.ingreso }}</td>
-                            <td class="text-danger font-weight-bold">{{ k.salida }}</td>
-                            <td class="">{{ k.producto_id }}</td>
-                            <td>{{ k.dia }}</td>
-                            <td>{{ k.hora }}</td>
+                            <th scope="col">#</th>
+                            <th scope="col">descripcion</th>
+                            <th scope="col">ingreso</th>
+                            <th scope="col">salida</th>
+                            <th scope="col">producto</th>
+                            <th scope="col">dia</th>
+                            <th scope="col">hora</th>
 
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+                        {% for k in kardex %}
+                            <tr>
+                                <td>{{ k.id }}</td>
+                                <td>{{ k.descripcion }}</td>
+                                <td class="text-primary text-bold font-weight-bold" style="">{{ k.ingreso }}</td>
+                                <td class="text-danger font-weight-bold">{{ k.salida }}</td>
+                                <td class="">{{ k.producto_id }}</td>
+                                <td>{{ k.dia }}</td>
+                                <td>{{ k.hora }}</td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
 
-    <!-- jQuery js-->
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <!-- Bootstrap js -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <!-- jQuery Datatable js -->
-    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <!-- Bootstrap Datatable js -->
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        <!-- jQuery js-->
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <!-- Bootstrap js -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <!-- jQuery Datatable js -->
+        <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <!-- Bootstrap Datatable js -->
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#example_table').DataTable({
-                    order: [
-                        [0, "desc"]
-                    ],
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                    },
+        <script>
+            $(document).ready(function () {
+                $('#example_table').DataTable({
+                        order: [
+                            [0, "desc"]
+                        ],
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                        },
 
-                }
-            );
-        });
-    </script>
+                    }
+                );
+            });
+        </script>
 
-    </body>
-
+        </body>
+    {% endif %}
 {% endblock content %}

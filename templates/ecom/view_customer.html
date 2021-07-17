@@ -2,196 +2,199 @@
 {% load static %}
 {% block content %}
 
+    {% if request.user.is_staff %}
+        <head>
+        <style media="screen">
+            a:link {
+                text-decoration: none;
+            }
 
-    <head>
-    <style media="screen">
-        a:link {
-            text-decoration: none;
-        }
+            h6 {
+                text-align: center;
+            }
 
-        h6 {
-            text-align: center;
-        }
+            .row {
+                margin: 20px;
+            }
 
-        .row {
-            margin: 20px;
-        }
+            .float {
+                position: fixed;
+                width: 70px;
+                height: 70px;
+                bottom: 60px;
+                right: 60px;
+                background-color: red;
+                color: #FFF;
+                border-radius: 50px;
+                text-align: center;
+                box-shadow: 3px 3px 3px #999;
+            }
 
-        .float {
-            position: fixed;
-            width: 70px;
-            height: 70px;
-            bottom: 60px;
-            right: 60px;
-            background-color: red;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            box-shadow: 3px 3px 3px #999;
-        }
+            .my-float {
+                margin-top: 22px;
+            }
 
-        .my-float {
-            margin-top: 22px;
-        }
+            .my-custom-scrollbar {
+                position: relative;
+                height: 200px;
+                overflow: auto;
+            }
 
-        .my-custom-scrollbar {
-            position: relative;
-            height: 200px;
-            overflow: auto;
-        }
+            .table-wrapper-scroll-y {
+                display: block;
+            }
 
-        .table-wrapper-scroll-y {
-            display: block;
-        }
+        </style>
 
-    </style>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
 
-    <section class="mb-4">
-        <div class="card">
-            <div class="card-header text-center py-3">
-                <h3 class="mb-0 text-center">
-                    <strong>Listado de Usuarios Normales Registrados</strong>
-                </h3>
-            </div>
-            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
-                <table class="table table-hover text-nowrap table table-striped " id="example_table">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Foto de Perfil</th>
-                        <th>Movil</th>
-                        <th>Contraseña</th>
-                        <th>Actualizar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                    </thead>
-                    {% for c in customers %}
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-header text-center py-3">
+                    <h3 class="mb-0 text-center">
+                        <strong>Listado de Usuarios Normales Registrados</strong>
+                    </h3>
+                </div>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
+                    <table class="table table-hover text-nowrap table table-striped " id="example_table">
+                        <thead>
                         <tr>
-                        <td> {{ c.id }}</td>
-                            <td> {{ c.get_name }}</td>
-                            <td><img src="{% static c.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px"/>
-                            </td>
-                            <td>{{ c.mobile }}</td>
-                            <td>{{ c.address }}</td>
-                            <td><a class="btn btn-primary btn-xs" href="{% url 'update-customer' c.id %}"><i
-                                    class="fas fa-edit"></i></a>
-                             <a class="btn btn-warning btn-xs" href="{% url 'editCliente' c.id %}"><i class="fas fa-camera"></i></a></td>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Foto de Perfil</th>
+                            <th>Movil</th>
+                            <th>Contraseña</th>
+                            <th>Actualizar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                        </thead>
+                        {% for c in customers %}
+                            <tr>
+                                <td> {{ c.id }}</td>
+                                <td> {{ c.get_name }}</td>
+                                <td><img src="{% static c.profile_pic.url %}" alt="Profile Pic" height="40px"
+                                         width="40px"/>
+                                </td>
+                                <td>{{ c.mobile }}</td>
+                                <td>{{ c.address }}</td>
+                                <td><a class="btn btn-primary btn-xs" href="{% url 'update-customer' c.id %}"><i
+                                        class="fas fa-edit"></i></a>
+                                    <a class="btn btn-warning btn-xs" href="{% url 'editCliente' c.id %}"><i
+                                            class="fas fa-camera"></i></a></td>
 
-                            <td><a class="btn btn-danger btn-xs" href="{% url 'delete-customer' c.id %}"><i
-                                    class="fas fa-trash-alt"></i></a></td>
+                                <td><a class="btn btn-danger btn-xs" href="{% url 'delete-customer' c.id %}"><i
+                                        class="fas fa-trash-alt"></i></a></td>
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <!-- jQuery js-->
+                    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+                    <!-- Bootstrap js -->
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                            crossorigin="anonymous"></script>
+                    <!-- jQuery Datatable js -->
+                    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+                    <!-- Bootstrap Datatable js -->
+                    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+                    <script>
+                        $(document).ready(function () {
+                            $('#example_table').DataTable({
+                                    "language": {
+                                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                                    },
+
+                                }
+                            );
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-header text-center py-3">
+                    <h3 class="mb-0 text-center">
+                        <strong>Listado de Usuarios Empresariales Registrados</strong>
+                    </h3>
+                </div>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
+                    <table class="table table-hover text-nowrap table table-striped " id="example_table2">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ruc</th>
+                            <th>Usuario</th>
+                            <th>Razón Social</th>
+                            <th>Estado</th>
+                            <th>Condición</th>
+                            <th>Dirección</th>
+                            <th>Departamento</th>
+                            <th>Provincia</th>
+                            <th>Distrito</th>
+                            <th>Ubigeo</th>
+                            <th>Capital</th>
+                            <th>Opción</th>
 
                         </tr>
-                    {% endfor %}
-                </table>
-                <!-- jQuery js-->
-                <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-                <!-- Bootstrap js -->
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-                        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                        crossorigin="anonymous"></script>
-                <!-- jQuery Datatable js -->
-                <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-                <!-- Bootstrap Datatable js -->
-                <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+                        </thead>
+                        {% for c in clientesempresarial %}
+                            <tr>
+                                <td> {{ c.id }}</td>
+                                <td> {{ c.ruc }}</td>
+                                <td>{{ c.user.username }}
+                                </td>
+                                <td>{{ c.razonsocial }}</td>
+                                <td>{{ c.estado }}</td>
+                                <td>{{ c.condicion }}</td>
+                                <td>{{ c.direccion }}</td>
+                                <td>{{ c.departamento }}</td>
+                                <td>{{ c.provincia }}</td>
+                                <td>{{ c.distrito }}</td>
+                                <td>{{ c.ubigeo }}</td>
+                                <td>{{ c.capital }}</td>
+                                <td><a class="btn btn-primary btn-xs"
+                                       href="{% url 'update-customerempresarial' c.id %}"><i
+                                        class="fas fa-edit"></i></a>
 
-                <script>
-                    $(document).ready(function () {
-                        $('#example_table').DataTable({
-                                "language": {
-                                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                                },
+                                    <a class="btn btn-danger btn-xs" href="{% url 'delete-customerempresarial' c.id %}"><i
+                                            class="fas fa-trash-alt"></i></a></td>
 
-                            }
-                        );
-                    });
-                </script>
 
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <!-- jQuery js-->
+                    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+                    <!-- Bootstrap js -->
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                            crossorigin="anonymous"></script>
+                    <!-- jQuery Datatable js -->
+                    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+                    <!-- Bootstrap Datatable js -->
+                    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+                    <script>
+                        $(document).ready(function () {
+                            $('#example_table2').DataTable({
+                                    "language": {
+                                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                                    },
+
+                                }
+                            );
+                        });
+                    </script>
+
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="mb-4">
-        <div class="card">
-            <div class="card-header text-center py-3">
-                <h3 class="mb-0 text-center">
-                    <strong>Listado de Usuarios Empresariales Registrados</strong>
-                </h3>
-            </div>
-            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
-                <table class="table table-hover text-nowrap table table-striped " id="example_table2">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ruc</th>
-                        <th>Usuario</th>
-                        <th>Razón Social</th>
-                        <th>Estado</th>
-                        <th>Condición</th>
-                        <th>Dirección</th>
-                        <th>Departamento</th>
-                        <th>Provincia</th>
-                        <th>Distrito</th>
-                        <th>Ubigeo</th>
-                        <th>Capital</th>
-                        <th>Opción</th>
-
-                    </tr>
-                    </thead>
-                    {% for c in clientesempresarial %}
-                        <tr>
-                            <td> {{ c.id}}</td>
-                            <td> {{ c.ruc}}</td>
-                            <td>{{ c.user.username }}
-                            </td>
-                            <td>{{ c.razonsocial}}</td>
-                            <td>{{ c.estado }}</td>
-                            <td>{{ c.condicion }}</td>
-                            <td>{{ c.direccion }}</td>
-                            <td>{{ c.departamento }}</td>
-                            <td>{{ c.provincia }}</td>
-                            <td>{{ c.distrito }}</td>
-                            <td>{{ c.ubigeo }}</td>
-                            <td>{{ c.capital }}</td>
-                            <td><a class="btn btn-primary btn-xs" href="{% url 'update-customerempresarial' c.id %}"><i
-                                    class="fas fa-edit"></i></a>
-
-                            <a class="btn btn-danger btn-xs" href="{% url 'delete-customerempresarial' c.id %}"><i
-                                    class="fas fa-trash-alt"></i></a></td>
-
-
-
-                        </tr>
-                    {% endfor %}
-                </table>
-                <!-- jQuery js-->
-                <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-                <!-- Bootstrap js -->
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-                        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                        crossorigin="anonymous"></script>
-                <!-- jQuery Datatable js -->
-                <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-                <!-- Bootstrap Datatable js -->
-                <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
-                <script>
-                    $(document).ready(function () {
-                        $('#example_table2').DataTable({
-                                "language": {
-                                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                                },
-
-                            }
-                        );
-                    });
-                </script>
-
-            </div>
-        </div>
-    </section>
-
+    {% endif %}
 {% endblock content %}

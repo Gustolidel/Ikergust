@@ -2,15 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User, Group
-from cloudinary.models import CloudinaryField
 # Create your models here.
 
-
+from django.core.validators import MinLengthValidator
 class Customer(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic= models.ImageField(upload_to='profile_pic/CustomerProfilePic/',null=True,blank=True,default="static/default.png")
     address = models.CharField(max_length=40)
-    mobile = models.CharField(max_length=20,null=False)
+    mobile = models.CharField(max_length=20,null=False, validators=[MinLengthValidator(4)] )
     @property
     def get_name(self):
         return self.user.first_name+" "+self.user.last_name
@@ -85,7 +84,7 @@ class Product(models.Model):
         ('Agotado', 'Agotado'),
     )
     name=models.CharField(max_length=300)
-    product_image= CloudinaryField('image')
+    product_image= models.ImageField(upload_to='product_image/',null=True,blank=True,default="default.jpg")
     codigo_fabrica = models.CharField(max_length=50, null=True)
     price = models.IntegerField()
     description=models.CharField(max_length=300)

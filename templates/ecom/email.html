@@ -1,22 +1,19 @@
-
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Enviando un mensaje al administrador</title>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+    <title>Contacto</title>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <h1 class="text-center text-muted">Formulario de Contacto</h1>
-        <form method="POST" action="" novalidate="novalidate">
-            {% csrf_token %}
-            {{ forma.as_p }}
-            <input type="submit" value="Confirmar" class="btn btn-success pull-right">
-        </form>
-    </div>
-</div>
+<h1>Hola soy {{ mail }} "{{ nombre }}" </h1>
+<p> Nuestro motivo es porque:
+    {{ mensaje }}
+</p>
+<hr>
+<p>
+   Celular: {{ celular }}
+
+</p>
+
 </body>
-</html>>
+</html>

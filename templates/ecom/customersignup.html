@@ -101,45 +101,31 @@
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <br><br>
-
-
                             <div class="row ">
-
-
                                 <div class="col-lg-12">
                                     <table id="respuesta" class="table">
                                         <thead>
                                         <th>Resultados</th>
                                         </thead>
                                         <tbody id="respuesta_body">
-
                                         <label for="mobile">Usuario</label>
-                                        <input class="form-control" name="usuario" id="txtPersonalizado" minlength="6"
-                                               maxlength="20"
-                                               placeholder="Ingrese nombre de Usuario" required> <br>
+                                        <input class="form-control" name="usuario" id="txtPersonalizado" maxlength="20" placeholder="Ingrese nombre de Usuario" required title="Letras y números. maximo 20 caracteres"> <br>
                                         <label for="mobile">Contraseña</label>
-                                        <input class="form-control" name="contraseña" id="txtcontraseña" minlength="6"
-                                               maxlength="30"
-                                               placeholder="Ingrese una contraseña" required>
-
+                                        <input class="form-control" type="password" name="contraseña" id="txtcontraseña"
+                                               maxlength="30" placeholder="Ingrese una contraseña" required title="Letras y números. maximo 30 caracteres">
                                         <br>
                                         <label for="address">Dirección</label>
                                         {% render_field customerForm.address class="form-control" id="txtdireccion" placeholder="Ingresa tu dirección" %}
                                         <br>
-
                                         <label for="mobile">Movil</label>
-                                        {% render_field customerForm.mobile class="form-control" id="cardnumber" placeholder="Ingresa tu movil" %}
+                                        {% render_field customerForm.mobile class="form-control"  minlength="9"  id="cardnumber" placeholder="Ingresa tu movil" %}
                                         <br>
-
                                         <label for="formFile" class="form-label">Ingrese una foto</label>
-                                        {% render_field customerForm.profile_pic class="form-control " placeholder="Profile pic" %}
-
-
+                                        {% render_field customerForm.profile_pic class="form-control"  placeholder="Profile pic" %}
                                         <br>
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
 
                             <!--  4. agrega el script final del body -->
@@ -233,7 +219,7 @@
                                 $(document).ready(function () {
                                     $('input#cardnumber')
                                         .keypress(function (event) {
-                                            if (event.which < 48 || event.which > 57 || this.value.length === 9) {
+                                            if (event.which < 48 || event.which > 57 || this.value.length === 10) {
                                                 return false;
                                             }
                                         });

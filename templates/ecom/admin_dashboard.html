@@ -2,125 +2,129 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 {% load static %}
 {% block content %}
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <script>
-        AOS.init();
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    {% if request.user.is_staff %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script>
+            AOS.init();
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 
-
-    {% include 'ecom/admin_dashboard_cards.html' %}
-
-    <!-- Bootstrap DataTable CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    <!--Section: Sales Performance KPIs-->
-    <section class="mb-4">
-        <div class="card">
-            <div class="card-header text-center py-3">
-                <h5 class="mb-0 text-center">
-                    <strong>Ordenes realizadas</strong>
-                </h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover text-nowrap table" id="example_table">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre Cliente</th>
-                            <th scope="col">fecha</th>
-                            <th scope="col">Movil Cliente</th>
-                            <th scope="col">Dirección de envio</th>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Imagen</th>
-                            <th scope="col">Estado</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for product,customer,order in data %}
+        {% include 'ecom/admin_dashboard_cards.html' %}
+
+        <!-- Bootstrap DataTable CSS -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+
+        <!--Section: Sales Performance KPIs-->
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-header text-center py-3">
+                    <h5 class="mb-0 text-center">
+                        <strong>Ordenes realizadas</strong>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover text-nowrap table" id="example_table">
+                            <thead>
                             <tr>
-
-                                {% for c in customer %}
-                                    <td>{{ order.id }}</td>
-                                    <td> {{ c.get_name }}</td>
-                                    <td> {{ order.order_date }}</td>
-                                    <td>{{ c.mobile }}</td>
-                                    <td>{{ order.address }}</td>
-
-                                {% endfor %}
-                                {% for p in product %}
-                                    <td> {{ p.name }}</td>
-                                    <td><img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px"
-                                             width="40px"/></td>
-
-                                    {% if order.status == 'Pendiente' %}
-                                        <td><span
-                                                class="label label-info text-info font-weight-bold">{{ order.status }}</span>
-                                        </td>
-                                    {% elif order.status == 'Entregada' %}
-                                        <td><span
-                                                class="label label-success text-success font-weight-bold">{{ order.status }}</span>
-                                        </td>
-                                    {% elif order.status == 'Fuera para entregar' %}
-                                        <td><span
-                                                class="label label-warning text-danger font-weight-bold">{{ order.status }}</span>
-                                        </td>
-                                    {% else %}
-                                        <td><span
-                                                class="label label-primary text-primary font-weight-bold">{{ order.status }}</span>
-                                        </td>
-                                    {% endif %}
-                                {% endfor %}
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre Cliente</th>
+                                <th scope="col">fecha</th>
+                                <th scope="col">Movil Cliente</th>
+                                <th scope="col">Dirección de envio</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Estado</th>
                             </tr>
-                        {% endfor %}
+                            </thead>
+                            <tbody>
+                            {% for product,customer,order in data %}
+                                <tr>
 
-                        </tbody>
-                    </table>
+                                    {% for c in customer %}
+                                        <td>{{ order.id }}</td>
+                                        <td> {{ c.get_name }}</td>
+                                        <td> {{ order.order_date }}</td>
+                                        <td>{{ c.mobile }}</td>
+                                        <td>{{ order.address }}</td>
+
+                                    {% endfor %}
+                                    {% for p in product %}
+                                        <td> {{ p.name }}</td>
+                                        <td><img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px"
+                                                 width="40px"/></td>
+
+                                        {% if order.status == 'Pendiente' %}
+                                            <td><span
+                                                    class="label label-info text-info font-weight-bold">{{ order.status }}</span>
+                                            </td>
+                                        {% elif order.status == 'Entregada' %}
+                                            <td><span
+                                                    class="label label-success text-success font-weight-bold">{{ order.status }}</span>
+                                            </td>
+                                        {% elif order.status == 'Fuera para entregar' %}
+                                            <td><span
+                                                    class="label label-warning text-danger font-weight-bold">{{ order.status }}</span>
+                                            </td>
+                                        {% else %}
+                                            <td><span
+                                                    class="label label-primary text-primary font-weight-bold">{{ order.status }}</span>
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+        <script>
+            AOS.init();
+        </script>
+
+
+        <!-- jQuery js-->
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <!-- Bootstrap js -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <!-- jQuery Datatable js -->
+        <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <!-- Bootstrap Datatable js -->
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#example_table').DataTable({
+                        order: [
+                            [0, "desc"]
+                        ],
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                        },
+
+                    }
+                );
+            });
+        </script>
         </div>
-    </section>
+        </main>
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <script>
-        AOS.init();
-    </script>
-
-
-    <!-- jQuery js-->
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <!-- Bootstrap js -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <!-- jQuery Datatable js -->
-    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <!-- Bootstrap Datatable js -->
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example_table').DataTable({
-                    order: [
-                        [0, "desc"]
-                    ],
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                    },
-
-                }
-            );
-        });
-    </script>
-    </div>
-    </main>
+    {% endif %}
 {% endblock content %}

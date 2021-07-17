@@ -9,7 +9,7 @@ class CustomerUserForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'password']
         widgets = {
-            'password': forms.PasswordInput()
+            'password': forms.PasswordInput(attrs={'class':'form-control','type':'password', 'name': 'password','placeholder':'Password'})
         }
 
 class PaqueteForm(ModelForm):
@@ -20,11 +20,12 @@ class PaqueteForm(ModelForm):
             'producto_id': forms.CheckboxSelectMultiple()
         }
 
-
+from django.core.validators import MinLengthValidator
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = models.Customer
         fields = ['address', 'mobile', 'profile_pic']
+
 
 
 #cliente-empresarial
@@ -33,7 +34,7 @@ class CustomerEmpresarialUserForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'password']
         widgets = {
-            'password': forms.PasswordInput()
+            'password': forms.PasswordInput(attrs={'class':'form-control','type':'password', 'name': 'password','placeholder':'Password'})
         }
 
 class CustomerEmpresarialForm(forms.ModelForm):
@@ -47,12 +48,18 @@ class CustomerEmpresarialForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = models.Product
-        fields = ['name', 'price','garantia','codigo_fabrica', 'description', 'product_image', 'categoria', 'stock', 'estado', 'marca', 'proveedor','product_precio_discuento']
-        labels = {
-            'proveedor': 'proveedor',
-            'name': 'name',
+        fields = '__all__'
 
-        }
+
+
+
+#productos
+class ProductsinimagenForm(forms.ModelForm):
+    class Meta:
+        model = models.Product
+        fields = '__all__'
+
+
 
 class Detalle_ProductForm(forms.ModelForm):
     class Meta:

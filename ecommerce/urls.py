@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import handler404
 from ecom import views
 from ecom.categoria import view_categoria
 from ecom.proveedor import view_proveedor
@@ -11,7 +12,6 @@ from django.contrib.auth.views import LoginView, LogoutView
 from rest_framework.authtoken.views import obtain_auth_token
 from django.conf import settings
 from django.conf.urls.static import static
-
 
 
 urlpatterns = [
@@ -28,21 +28,20 @@ urlpatterns = [
     path('search_categoria', views.search_view_categorias, name='search_categoria'),
     path('search_proveedores', views.search_view_proveedores, name='search_proveedores'),
     path('send-feedback', views.send_feedback_view.as_view(), name='send-feedback'),
-    path('buscar-categoria-kardex', views.buscar_producto_kardex.as_view(), name='buscar-categoria-kardex'),
+
 
     path('view-feedback', views.view_feedback_view, name='view-feedback'),
     path('responder_feedback_view/<int:pk>/', views.responder_feedback_view, name='responder_feedback_view'),
     path('Actualziar-cantidad-producto/<int:pk>/', views.Actualizar_producto_kardex_view, name='Actualziar-cantidad-producto'),
     path('kardex-view', views.kardex_view, name='kardex-view'),
     path('kardex_opciones', views.kardex_opciones, name='kardex_opciones'),
+    path('buscar-categoria-kardex', views.buscar_producto_kardex.as_view(), name='buscar-categoria-kardex'),
     path('Paquetes_opciones', views.Paquete_opciones, name='Paquetes_opciones'),
     path('adminclick', views.adminclick_view),
     path('adminlogin', LoginView.as_view(template_name='ecom/adminlogin.html'), name='adminlogin'),
 
     # dashboards
     path('admin-dashboard', views.admin_dashboard_view, name='admin-dashboard'),
-    path('data', views.pivot_data, name='pivot_data'),
-    path('dashboard_general', views.dashboard_with_pivot, name='dashboard_with_pivot'),
     path('admin-dashboard_detalle', views.admin_dashboard_detalle, name='admin-dashboard_detalle'),
     path('admin_fecha_ordenes', views.admin_fecha_ordenes.as_view(), name='admin_fecha_ordenes'),
     path('admin_pagos', views.admin_pagos_view, name='admin_pagos'),
@@ -69,7 +68,7 @@ urlpatterns = [
     path('admin-products', views.admin_products_view, name='admin-products'),
     path('admin-add-product', views.admin_add_product_view, name='admin-add-product'),
     path('delete-product/<int:pk>', views.delete_product_view, name='delete-product'),
-    path('update-product/<int:pk>', views.update_product_view, name='update-product'),
+    path('update-product/<int:pk>', views.update_product_view.as_view(), name='update-product'),
 
     path('admin-view-booking', views.admin_view_booking_view, name='admin-view-booking'),
     path('delete-order/<int:pk>', views.delete_order_view, name='delete-order'),
@@ -103,8 +102,7 @@ urlpatterns = [
     path('confirmar_payment', views.confirmar_payment, name='confirmar_payment'),
 
     path('payment-success', views.payment_success_view.as_view(), name='payment-success'),
-    path('prueba', views.prueba, name='prueba'),
-    path('prueba2', views.prueba2, name='prueba2'),
+
 
     # Django Ajax CRUD Operaciones Categoria
     path('categoria_admin/', view_categoria.CrudView.as_view(), name='crud_ajax'),
@@ -133,7 +131,16 @@ urlpatterns = [
     path('api/deleteproducts/<int:pk>/', view_servicio_rest.ProductoDeleteApi.as_view(), name='deleteproducts'),
     path('api/login/', obtain_auth_token),
     path('api/register/', view_servicio_rest.RegisterView.as_view()),
-
+    path('api/orden/', view_servicio_rest.OrderView.as_view()),
 
 ]
+
+from django.conf.urls import (handler403, handler404, handler500)
+
+
+handler404 = 'ecom.views.error_404_view'
+handler500 = 'ecom.views.handler500'
+handler400 = 'ecom.views.handler400'
+
+
 

@@ -1,105 +1,105 @@
 {% extends 'ecom/admin_base.html' %}
 {% load widget_tweaks %}
 {% block content %}
+    {% if request.user.is_staff %}
+        <head>
+            <style media="screen">
+                a:link {
+                    text-decoration: none;
+                }
 
-<head>
-  <style media="screen">
-    a:link {
-      text-decoration: none;
-    }
+                .note {
+                    text-align: center;
+                    height: 80px;
+                    background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+                    color: #fff;
+                    font-weight: bold;
+                    line-height: 80px;
+                }
 
-    .note {
-      text-align: center;
-      height: 80px;
-      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
-      color: #fff;
-      font-weight: bold;
-      line-height: 80px;
-    }
-
-    .form-content {
-      padding: 5%;
-      border: 1px solid #ced4da;
-      margin-bottom: 2%;
-    }
-
-    .form-control {
-      border-radius: 1.5rem;
-    }
-
-    .btnSubmit {
-      border: none;
-      border-radius: 1.5rem;
-      padding: 1%;
-      width: 20%;
-      cursor: pointer;
-      background: #0062cc;
-      color: #fff;
-    }
-
-    .menu {
-      top: 50px;
-    }
-  </style>
-
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-<br><br><br><br><br><br>
-<!------ update page for doctor by admin(sumit)  ---------->
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <div class="container register-form">
-    <div class="form">
-      <div class="note">
-        <p>Update Product Details</p>
-      </div>
-      <div class="form-content">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              {% render_field productForm.name class="form-control" placeholder="Nombre del Producto" %}
-            </div>
-            <div class="form-group">
-              {% render_field productForm.description class="form-control" placeholder="Descripción" %}
-            </div>
-            <div class="form-group">
-              {% render_field productForm.categoria class="form-control" placeholder="Categoria" %}
-            </div>
-            <div class="form-group">
-              {% render_field productForm.estado class="form-control" placeholder="Estado" %}
-            </div>
-               <div class="form-group">
-              {% render_field productForm.stock class="form-control" placeholder="Stock" %}
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              {% render_field productForm.price class="form-control" placeholder="Precio" %}
-            </div>
-            <div class="form-group">
-              {% render_field productForm.product_image class="form-control" placeholder="product_image" %}
-            </div>
-            <div class="form-group">
-              {% render_field productForm.marca class="form-control" placeholder="Marca" %}
-            </div>
-             <div class="form-group">
-              {% render_field productForm.proveedor class="form-control" placeholder="Proveedor" %}
-            </div>
+                .form-content {
+                    padding: 5%;
+                    border: 1px solid #ced4da;
+                    margin-bottom: 2%;
+                }
 
 
-          </div>
+                .menu {
+                    top: 50px;
+                }
+            </style>
+
+        </head>
+        <br><br><br><br><br><br>
+
+
+
+        <div class="container register-form">
+            <div class="form">
+                <div class="note">
+                    <p>Actualizar Producto</p>
+                </div>
+                <div class="form-content">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group pt-3">
+                                    {% render_field form.codigo_fabrica class="form-control" placeholder="Codigo de fabrica" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.name class="form-control" placeholder="Nombre Producto" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.description class="form-control" placeholder="Descripción" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.categoria class="form-control" placeholder="Categoria" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.estado class="form-control" placeholder="Estado" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.stock class="form-control" placeholder="Stock" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.price class="form-control" placeholder="Precio" %}
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-group pt-3">
+                                    {% render_field form.product_image class="form-control" placeholder="producto_imagen" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.marca class="form-control" placeholder="Marca" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.proveedor class="form-control" placeholder="Proveedor" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.product_precio_discuento class="form-control" placeholder="Precio descuento" %}
+                                </div>
+                                <div class="form-group pt-3">
+                                    {% render_field form.garantia class="form-control" placeholder="Garantia del producto" %}
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-group pt-5 text-center">
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btnSubmit">Update</button>
-      </div>
-    </div>
-  </div>
-</form>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
 
+    {% endif %}
 {% endblock content %}

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
     <style media="screen">
-        /* Clear floats after the columns */
+
         .row:after {
             content: "";
             line-height: 40px;
@@ -137,7 +137,7 @@
                                                      style="position: absolute; margin-left: 900px; margin-top: 70px; height: 90px; width: 200px; z-index: 1;  clear:right;">
                                             {% endif %}
                                             <div class="mr-4 ml-4  ">
-                                                <img src="{{ i.product_image.url }}"
+                                                <img src="{% static i.product_image.url %}"
                                                      class="mx-auto d-block img-fluid w-100 img-responsive bg-image hover-zoom w-100"
                                                      style="display: block; height: 200px; ">
                                             </div>
@@ -288,7 +288,7 @@
                                                      class=" img-fluid  img-responsive ml-4"
                                                      style="position: absolute; margin-left: 900px; margin-top: 100px; height: 80px; width: 200px; z-index: 1;  clear:right;">
                                             {% endif %}
-                                            <img src="{{ p.product_image.url }}" alt="product pic"
+                                            <img src="{% static p.product_image.url %}" alt="product pic"
                                                  class="mx-auto d-block img-fluid img-responsive bg-image hover-zoom w-100"
                                                  style="width: 100%; display: block; margin-left: auto; margin-right: auto;margin: auto;height: 300px">
                                         </div>
@@ -352,7 +352,8 @@
         </div>
 
     {% else %}
-        <h3 style="text-align:center; color:yellow;">No se escuentra nada buscado</h3>
+        <h1 class="pt-5" style="text-align:center; color:#1a88ff">No se escuentra nada</h1>
+
     {% endif %}
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -403,7 +404,7 @@
                                                              class=" img-fluid  img-responsive ml-4"
                                                              style="position: absolute; margin-top: 60px; height: 60px; width: 80px; z-index: 1; float:right; clear:right;">
                                                     {% endif %}
-                                                    <img src="{{  i.product_image.url }}"
+                                                    <img src="{% static i.product_image.url %}"
                                                          class="mx-auto d-block img-fluid w-100 img-responsive bg-image hover-zoom w-100"
                                                          style="display: block; height: 200px; ">
                                                 </div>

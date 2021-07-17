@@ -3,45 +3,69 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>LazyCoder || sumit</title>
+    <title>Contactanos</title>
 
 
 </head>
 
-<body style="background-color: #B3E5FC;">
+<body>
 
-  {%if request.user.is_authenticated%}
+{% if request.user.is_authenticated %}
     {% include "ecom/customer_navbar.html" %}
-  {%else%}
+{% else %}
     {% include "ecom/navbar.html" %}
-  {%endif%}
+{% endif %}
 
-  <center>
+<center>
     <h3 class='alert alert-success'>Send Us Your Valuable Feedback !</h3>
 
-    <form method="POST">
-      <!-- Very Important csrf Token -->
-      {% csrf_token %}
-      <div class="form-group">
-        <p>
-        <h3>{{ form.as_p }}</h3>
-        </p>
-        <br>
-          <input type="text" name="mail" placeholder="mail e enviar">
-          <input type="text" name="mailpropio" placeholder="mail propio">
-          <input type="text" name="descripcion" placeholder="descripcion">
-        <input type="submit" value="Send Message" class='btn btn-primary btn-lg'>
-      </div>
-    </form>
-  </center>
-  {% include "ecom/footer.html" %}
+    <div class="container card shadow p-3 mb-5 bg-white rounded pt-3">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label class="form-label" for="form3Example1">Correo</label>
+                        <input placeholder="Escribe tu correo gmail" type="email" name="gmail" id="form3Example1"
+                               class="form-control" required/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label class="form-label" for="form3Example2">Nombre </label>
+                        <input placeholder="Escribe tu nombre" type="text" id="form3Example2" name="nombre"
+                               class="form-control" required pattern="[A-Za-z]+"
+                               title="Solo puedes colocar letras"/>
+
+                    </div>
+
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <label class="form-label" for="form3Example1">Celular</label>
+                <input placeholder="Escribe tu celular" type="text" name="celular" id="form3Example1"
+                       class="form-control" required pattern="[0-9]+" maxlength="9" minlength="7"
+                       title="Solo puedes colocar numeros, tienen que ser 9 digitos"/>
+            </div>
+
+            <br>
+            <div class="form-group mb-4 pt-3">
+                <label class="form-label" for="form3Example3">Mensaje</label>
+                <textarea placeholder="Escribe la razón por la cual quieres contactarnos" ows="10" cols="50"
+                          name="mensaje " id="form3Example3" class="form-control" maxlength="300"
+                          required></textarea>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary ">Enviar</button>
+        </form>
+    </div>
+</center>
+{% include "ecom/footer.html" %}
 </body>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
 
 </html>

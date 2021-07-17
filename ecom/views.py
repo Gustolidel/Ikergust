@@ -6,19 +6,18 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from math import ceil
-from django.core import serializers
 from .models import Product, Orders
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.db.models import Count
 from django.db.models import Sum
-from django.views.generic import ListView, CreateView, UpdateView, DetailView, View
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, View, TemplateView
 from rest_framework.authtoken.models import Token
 import os
 from django.shortcuts import get_object_or_404, redirect, reverse
 import json
 from django.views import generic
-from cloudinary.forms import cl_init_js_callbacks
+
 
 def home_view(request):
     products = models.Product.objects.all().order_by('-id')[:12]
@@ -94,6 +93,10 @@ def eleccion_registro_view(request):
         product_count_in_cart = 0
     return render(request, 'ecom/eleccion_registro.html', {"product_count_in_cart": product_count_in_cart})
 
+# -----------para comprobar el usuario -> is_administrador
+def is_administrador(user):
+    return user.groups.filter(name='Administrador').exists()
+
 
 # -----------para comprobar el usuario -> iscustomer
 def is_customer(user):
@@ -159,8 +162,9 @@ def admin_dashboard_view(request):
 
 
 from django.db.models import Func
-# Dashboard detalles --------------------------------------------------
 
+
+# Dashboard detalles --------------------------------------------------
 
 
 @login_required(login_url='adminlogin')
@@ -220,14 +224,32 @@ def admin_dashboard_detalle(request):
 
     return render(request, 'ecom/dashboard/dashboard_detalle.html', context=mydict)
 
+
 ###########----------PAGOS-----------##############################
 # administrador ver tabla de pagos
 @login_required(login_url='adminlogin')
 def admin_pagos_view(request):
     pagos = models.Payment.objects.all().order_by('-id')
-    return render(request, 'ecom/admin/admin_pagos.html',{'pagos': pagos})
+    return render(request, 'ecom/admin/admin_pagos.html', {'pagos': pagos})
+
+
+from django.utils.decorators import method_decorator
+
+
+def admin_required(function):
+    def wrap(request, *args, **kwargs):
+        if not request.user.groups.filter(name='Administrador').exists():
+            return redirect('/')
+        return function(request, *args, **kwargs)
+
+    return wrap
 
 class admin_fecha_ordenes(View):
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(admin_fecha_ordenes, self).dispatch(request, *args, **kwargs)
+
 
     def get(self, request, *args, **kwargs):
         return render(request, 'ecom/admin/admin_buscar_fecha_ordenes.html')
@@ -235,21 +257,10 @@ class admin_fecha_ordenes(View):
     def post(self, request, *args, **kwargs):
         fecha = request.POST.get("fecha")
         fecha2 = request.POST.get("fecha2")
-        ordenes = Orders.objects.raw('select id AS id, order_date, address from ecom_orders where order_date between "'+fecha+'"and"'+fecha2+'"')
+        ordenes = Orders.objects.raw(
+            'select id AS id, order_date, address from ecom_orders where order_date between "' + fecha + '"and"' + fecha2 + '"')
         return render(request, 'ecom/admin/admin_buscar_fecha_ordenes.html',
                       {"ordenes": ordenes})
-
-
-# -------------------------------------------------------------------------
-# Dasboard de pivot
-def dashboard_with_pivot(request):
-    return render(request, 'ecom/dashboard/dashboard_general.html', {})
-
-
-def pivot_data(request):
-    dataset = models.Product.objects.all()
-    data = serializers.serialize('json', dataset)
-    return JsonResponse(data, safe=False)
 
 
 # -------------------------------------------------------------------------
@@ -322,7 +333,7 @@ def update_customerempresarial_view(request, pk):
             return redirect('view-customer')
     return render(request, 'ecom/admin/admin_update_clienteempresarial.html', context=mydict)
 
-
+@login_required(login_url='adminlogin')
 def editProduct(request, pk):
     prod = models.Product.objects.get(id=pk)
 
@@ -338,7 +349,7 @@ def editProduct(request, pk):
     context = {'prod': prod}
     return render(request, 'ecom/admin/admin_actualizar_producto_imagen.html', context)
 
-
+@login_required(login_url='adminlogin')
 def editCliente(request, pk):
     prod = models.Customer.objects.get(id=pk)
 
@@ -389,22 +400,23 @@ def admin_add_product_view(request):
 
 
 @login_required(login_url='adminlogin')
+@user_passes_test(is_administrador)
 def delete_product_view(request, pk):
     product = models.Product.objects.get(id=pk)
     product.delete()
     return redirect('admin-products')
 
 
-@login_required(login_url='adminlogin')
-def update_product_view(request, pk):
-    product = models.Product.objects.get(id=pk)
-    productForm = forms.ProductForm(instance=product)
-    if request.method == 'POST':
-        productForm = forms.ProductForm(request.POST, request.FILES, instance=product)
-        if productForm.is_valid():
-            productForm.save()
-            return redirect('admin-products')
-    return render(request, 'ecom/admin_update_product.html', {'productForm': productForm})
+class update_product_view(UpdateView):
+    model = Product
+    fields = "__all__"
+    template_name = 'ecom/admin_update_product.html'
+    success_url = '/admin-products'
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(update_product_view, self).dispatch(request, *args, **kwargs)
+
 
 
 # --------------------------------------------
@@ -811,7 +823,7 @@ def customer_address_view(request):
         product_count_in_cart = 0
 
     CALLBACK_URL = request.build_absolute_uri(reverse("confirmar_payment"))
-
+    contraseñapaypal = "AWbVCrW02zFBo9VMpZ0OlGNNRGMktkD92xCM4qInm0uPPKy4n8SezOpANRsxzOsahrIKvvgFeSUo9UR1"
     addressForm = forms.AddressForm()
     if request.method == 'POST':
         addressForm = forms.AddressForm(request.POST)
@@ -837,7 +849,7 @@ def customer_address_view(request):
                     for p in products:
                         total = total + p.price
 
-            response = render(request, 'ecom/payment.html', {'total': total, 'CALLBACK_URL': CALLBACK_URL})
+            response = render(request, 'ecom/payment.html', {'total': total, 'CALLBACK_URL': CALLBACK_URL, 'contraseña': contraseñapaypal})
             response.set_cookie('email', email)
             response.set_cookie('mobile', mobile)
             response.set_cookie('address', address)
@@ -848,7 +860,7 @@ def customer_address_view(request):
         else:
             messages.error(request, "el telefono no es correcto")
     return render(request, 'ecom/customer_address.html',
-                  {'addressForm': addressForm, 'product_in_cart': product_in_cart,
+                  {'addressForm': addressForm, 'product_in_cart': product_in_cart,'contraseña': contraseñapaypal,
                    'product_count_in_cart': product_count_in_cart})
 
 
@@ -856,19 +868,8 @@ def confirmar_payment(request):
     return render(request, 'ecom/payment_success.html')
 
 
-def prueba(request):
-    return render(request, 'ecom/prueba.html')
-
-
-def prueba2(request):
-    x = Product.objects.all()
-    return render(request, 'ecom/prueba2.html', {'pro': x})
-
-
-
-
-
 class payment_success_view(generic.View):
+
     def post(self, request, *args, **kwargs):
         # Aquí haremos el pedido | después del pago exitoso
         # buscaremos el móvil del cliente, la dirección, el correo electrónico
@@ -907,9 +908,6 @@ class payment_success_view(generic.View):
         if 'dni' in request.COOKIES:
             dni = request.COOKIES['dni']
 
-
-
-
         # here we are placing number of orders as much there is a products
         # suppose if we have 5 items in cart and we place order....so 5 rows will be created in orders table
         # there will be lot of redundant data in orders table...but its become more complicated if we normalize it
@@ -924,10 +922,10 @@ class payment_success_view(generic.View):
 
         send_email(email, distrito, address, o.id)
 
-            # para guardar los productos seleccionados en la tabla Kardex
+        # para guardar los productos seleccionados en la tabla Kardex
         for product in kardexs:
             k = models.Kardex(ingreso=0, descripcion="Reducción del producto", salida=1,
-                                                producto_id=product)
+                              producto_id=product)
             k.save()
 
             product.stock -= 1
@@ -944,8 +942,6 @@ class payment_success_view(generic.View):
 
         payment.save()
 
-
-
         # después de realizar el pedido, las cookies deben eliminarse
         response = HttpResponseRedirect('confirmar_payment')
 
@@ -957,8 +953,6 @@ class payment_success_view(generic.View):
         response.delete_cookie('distrito')
         response.delete_cookie('dni')
         return response
-
-
 
 
 @login_required(login_url='customerlogin')
@@ -992,8 +986,6 @@ def my_order_view(request):
 # --------------para descargar e imprimir la factura del paciente al alta (pdf)
 import io
 from xhtml2pdf import pisa
-from django.template.loader import get_template
-from django.template import Context
 from django.http import HttpResponse
 
 
@@ -1064,31 +1056,27 @@ def aboutus_view(request):
 
 
 def contactus_view(request):
-    sub = forms.ContactusForm()
+
     if request.method == 'POST':
-        sub = forms.ContactusForm(request.POST)
-        if sub.is_valid():
-            email = sub.cleaned_data['Email']
-            name = sub.cleaned_data['Name']
-            message = sub.cleaned_data['Message']
-            send_mail(str(name) + ' || ' + str(email), message, settings.EMAIL_HOST_USER, settings.EMAIL_RECEIVING_USER,
-                      fail_silently=False)
+        mail= request.POST.get('gmail')
+        nombre =request.POST.get('nombre')
+        celular = request.POST.get('celular')
+        mensaje = request.POST.get('mensaje')
+        send_email_contacto(mail=mail,nombre=nombre, celular=celular, mensaje=mensaje)
+        return HttpResponseRedirect('/')
+    return render(request, 'ecom/contactus.html')
 
-            return render(request, 'ecom/contactussuccess.html')
-    return render(request, 'ecom/contactus.html', {'form': sub})
 
-from django.conf import  settings
+from django.conf import settings
 from django.shortcuts import render
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 
 
-
-
 def send_email(mail, distrito, address, orden):
-    context={'mail':mail, 'distrito': distrito, 'direccion': address, 'orden': orden}
-    template=get_template('ecom/correo.html')
-    content=template.render(context)
+    context = {'mail': mail, 'distrito': distrito, 'direccion': address, 'orden': orden}
+    template = get_template('ecom/correo.html')
+    content = template.render(context)
 
     email = EmailMultiAlternatives(
         'Mensaje de Empresa Ikergust',
@@ -1098,10 +1086,25 @@ def send_email(mail, distrito, address, orden):
 
     )
 
-    email.attach_alternative(content,'text/html')
+    email.attach_alternative(content, 'text/html')
     email.send()
 
 
+def send_email_contacto(mail, nombre, celular, mensaje):
+    context = {'mail': mail, 'nombre': nombre, 'celular': celular, 'mensaje': mensaje}
+    template = get_template('ecom/email.html')
+    content = template.render(context)
+
+    email = EmailMultiAlternatives(
+        'Mensaje de Empresa Ikergust',
+        'Venta realizada',
+         mail,
+        ['gakdo4157@gmail.com'],
+
+    )
+
+    email.attach_alternative(content, 'text/html')
+    email.send()
 
 class send_feedback_view(View):
 
@@ -1146,6 +1149,10 @@ def kardex_opciones(request):
 
 
 class buscar_producto_kardex(View):
+
+    @method_decorator(admin_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(buscar_producto_kardex, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         categoria = models.Categoria.objects.all()
@@ -1220,3 +1227,21 @@ def admin_distribuidor_agregar(request):
 #####################################
 def Paquete_opciones(request):
     return render(request, 'ecom/admin/admin_opcionpaquetes.html')
+
+
+#####################################
+#             ERRORES      ####
+#####################################
+class Error404(TemplateView):
+    template_name = 'ecom/error404.html'
+
+
+def error_404_view(request, exception):
+    return render(request,'ecom/error404.html')
+
+def handler500(request, *args, **argv):
+    return render(request, 'ecom/error404.html', status=500)
+
+def handler400(request, *args, **argv):
+    return render(request, 'ecom/error400.html', status=400)
+

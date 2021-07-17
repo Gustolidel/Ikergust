@@ -35,22 +35,29 @@ class ProductView(APIView):
 
 
 class ProductoCreateApi(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated, ]
+    authentication_classes = [TokenAuthentication, ]
     queryset = Product.objects.all()
     serializer_class = ProductCrearSerializer
 
 
 
 class ProductoUpdateApi(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated, ]
+    authentication_classes = [TokenAuthentication, ]
     queryset = Product.objects.all()
     serializer_class = ProductCrearSerializer
 
 
 class ProductoDeleteApi(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated, ]
+    authentication_classes = [TokenAuthentication, ]
     queryset = Product.objects.all()
     serializer_class = ProductCrearSerializer
 
 
 class CRUCAPIView(generics.ListCreateAPIView):
+
     search_fields = ['id']
     filter_backends = (filters.SearchFilter,)
     queryset = Product.objects.all()
@@ -69,7 +76,6 @@ class RegisterView(APIView):
 class OrderView(APIView):
     permission_classes = [IsAuthenticated, ]
     authentication_classes = [TokenAuthentication, ]
-
     def get(self, request):
         try:
             query = Orders.objects.all()

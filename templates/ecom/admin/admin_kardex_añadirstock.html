@@ -3,30 +3,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {% load widget_tweaks %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    {% if request.user.is_staff %}
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Aumentar Producto</title>
+        </head>
+        <body>
 
-<div class="container">
-    <h1>Producto {{ producto.name }}</h1>
-    <form method="post">
-         {% csrf_token %}
-        <div class="form-group">
-            <input type="hidden" name="id_producto" value="{{ producto.pk }}">
-            <label for="formGroupExampleInput">Cantidad</label>
-            <input name="stock" type="number" class="form-control" id="formGroupExampleInput"
-                   placeholder="agrega la cantidad de producto">
-        </div>
-        <div class="text-center pt-5">
-            <button class="btn btn-success" type="submit"> Añadir Cantidad </button>
+        <div class="container">
+            <h1>Producto {{ producto.name }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="hidden" name="id_producto" value="{{ producto.pk }}">
+                    <label for="formGroupExampleInput">Cantidad</label>
+                    <input name="stock" type="number" class="form-control" id="formGroupExampleInput"
+                           placeholder="agrega la cantidad de producto">
+                </div>
+                <div class="text-center pt-5">
+                    <button class="btn btn-success" type="submit"> Añadir Cantidad</button>
 
+                </div>
+            </form>
         </div>
-    </form>
-</div>
-</body>
-</html>
+        </body>
+        </html>
+    {% endif %}
 {% endblock content %}

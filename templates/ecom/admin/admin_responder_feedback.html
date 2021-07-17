@@ -2,8 +2,10 @@
 {% load static %}
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{% load widget_tweaks %}
-{% block content %}
+
+    {% load widget_tweaks %}
+    {% block content %}
+        {% if request.user.is_staff %}
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -39,4 +41,6 @@
     </div>
     </body>
     </html>
+{% endif %}
+        No tienes acceso
 {% endblock content %}

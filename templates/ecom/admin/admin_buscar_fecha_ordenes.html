@@ -3,139 +3,140 @@
 
 {% load widget_tweaks %}
 {% block content %}
-    <style media="screen">
-        a:link {
-            text-decoration: none;
-        }
+    {% if request.user.is_staff %}
+        <style media="screen">
+            a:link {
+                text-decoration: none;
+            }
 
-        h6 {
-            text-align: center;
-        }
+            h6 {
+                text-align: center;
+            }
 
-        .row {
-            margin: 20px;
-        }
+            .row {
+                margin: 20px;
+            }
 
-        .float {
-            position: fixed;
-            width: 70px;
-            height: 70px;
-            bottom: 60px;
-            right: 60px;
-            background-color: red;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            box-shadow: 3px 3px 3px #999;
-        }
+            .float {
+                position: fixed;
+                width: 70px;
+                height: 70px;
+                bottom: 60px;
+                right: 60px;
+                background-color: red;
+                color: #FFF;
+                border-radius: 50px;
+                text-align: center;
+                box-shadow: 3px 3px 3px #999;
+            }
 
-        .my-float {
-            margin-top: 22px;
-        }
+            .my-float {
+                margin-top: 22px;
+            }
 
-        .my-custom-scrollbar {
-            position: relative;
-            height: 200px;
-            overflow: auto;
-        }
+            .my-custom-scrollbar {
+                position: relative;
+                height: 200px;
+                overflow: auto;
+            }
 
-        .table-wrapper-scroll-y {
-            display: block;
-        }
+            .table-wrapper-scroll-y {
+                display: block;
+            }
 
-    </style>
+        </style>
 
-    <body>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
-    <section class="mb-4 pt-3 row justify-content-center">
-        <div class="card col-md-10">
-            <div class="card-header text-center py-3">
-                <h5 class="mb-0 text-center">
-                    <strong>Buscador de Fechas</strong>
-                </h5>
-            </div>
-            <form method="post">
-                {% csrf_token %}
-                <div class="container text-center pt-4 ">
-                    <div class="">
-                        <label>De </label>
-                        <input type="date" name="fecha" class="form-control" required>
-                        <label>hasta </label>
-                        <input type="date" name="fecha2" class="form-control" required>
-                        <div class="text-center pt-3 py-3">
-                            <button class="btn btn-success " type="submit">Buscar</button>
+        <body>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+        <section class="mb-4 pt-3 row justify-content-center">
+            <div class="card col-md-10">
+                <div class="card-header text-center py-3">
+                    <h5 class="mb-0 text-center">
+                        <strong>Buscador de Fechas</strong>
+                    </h5>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="container text-center pt-4 ">
+                        <div class="">
+                            <label>De </label>
+                            <input type="date" name="fecha" class="form-control" required>
+                            <label>hasta </label>
+                            <input type="date" name="fecha2" class="form-control" required>
+                            <div class="text-center pt-3 py-3">
+                                <button class="btn btn-success " type="submit">Buscar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    </section>
-
-
-    <section class="mb-4">
-        <div class="card">
-            <div class="card-header text-center py-3">
-                <h5 class="mb-0 text-center">
-                    <strong>Resultado de buscador de Ordenes por Fechas</strong>
-                </h5>
+                </form>
             </div>
-            <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
-                <table class="table table-hover text-nowrap table table-striped " id="example_table">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Cliente</th>
-                        <th scope="col">Dirección</th>
-                        <th scope="col">Fecha de Orden</th>
+        </section>
 
-                    </tr>
 
-                    </thead>
-                    <tbody>
-
-                    {% for p in ordenes %}
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-header text-center py-3">
+                    <h5 class="mb-0 text-center">
+                        <strong>Resultado de buscador de Ordenes por Fechas</strong>
+                    </h5>
+                </div>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar" style="height: 400%;">
+                    <table class="table table-hover text-nowrap table table-striped " id="example_table">
+                        <thead class="thead-light">
                         <tr>
-                            <td>{{ p.id }}</td>
-                            <td>{{ p.get_producto }}</td>
-                            <td>{{ p.get_cliente }}</td>
-                            <td>{{ p.get_direccion }}</td>
-                            <td class="text-primary">{{ p.order_date }}</td>
-
-                            <td></td>
+                            <th scope="col">#</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Dirección</th>
+                            <th scope="col">Fecha de Orden</th>
 
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+
+                        </thead>
+                        <tbody>
+
+                        {% for p in ordenes %}
+                            <tr>
+                                <td>{{ p.id }}</td>
+                                <td>{{ p.get_producto }}</td>
+                                <td>{{ p.get_cliente }}</td>
+                                <td>{{ p.get_direccion }}</td>
+                                <td class="text-primary">{{ p.order_date }}</td>
+
+                                <td></td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
 
-    <!-- jQuery js-->
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <!-- Bootstrap js -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <!-- jQuery Datatable js -->
-    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <!-- Bootstrap Datatable js -->
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        <!-- jQuery js-->
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <!-- Bootstrap js -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        <!-- jQuery Datatable js -->
+        <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <!-- Bootstrap Datatable js -->
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#example_table').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                    },
+        <script>
+            $(document).ready(function () {
+                $('#example_table').DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                        },
 
-                }
-            );
-        });
-    </script>
+                    }
+                );
+            });
+        </script>
 
-    </body>
-
+        </body>
+    {% endif %}
 {% endblock content %}

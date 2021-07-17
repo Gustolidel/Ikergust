@@ -1,340 +1,344 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% if request.user.is_staff  %}
+    <html lang="en">
+    <head>
+        <link rel="shortcut icon" type="image/x-icon"
+              href="https://scontent.flim16-2.fna.fbcdn.net/v/t1.6435-9/109537133_101446354995697_8424160108133166075_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeGr9JmfdeGRzFhRyIyNHFiLOeZIRPU6gYc55khE9TqBh7IkYBrtEU6kLCpOLaHweIyofZBoP6C7Smj1SmSRXN_7&_nc_ohc=LdhrGPbeUKgAX9jlJUH&_nc_ht=scontent.flim16-2.fna&oh=e1978eb8ed7a3a6a20d7ba260b3e23ff&oe=60EBAA4C"/>
+        <meta charset="utf-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-            rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
-            rel="stylesheet"
-    />
-    <script
-            type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
-    ></script>
+        <link
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+                rel="stylesheet"
+        />
+        <!-- Google Fonts -->
+        <link
+                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+                rel="stylesheet"
+        />
+        <!-- MDB -->
+        <link
+                href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+                rel="stylesheet"
+        />
+        <script
+                type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+        ></script>
 
 
-    <style>
-        body {
-            background-color: #fbfbfb;
-        }
-
-        @media (min-width: 991.98px) {
-            main {
-                padding-left: 240px;
+        <style>
+            body {
+                background-color: #fbfbfb;
             }
-        }
 
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            padding: 58px 0 0; /* Height of navbar */
-            box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-            width: 240px;
-            z-index: 600;
-        }
+            @media (min-width: 991.98px) {
+                main {
+                    padding-left: 240px;
+                }
+            }
 
-        @media (max-width: 991.98px) {
+            /* Sidebar */
             .sidebar {
-                width: 100%;
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                padding: 58px 0 0; /* Height of navbar */
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+                width: 240px;
+                z-index: 600;
             }
-        }
 
-        .sidebar .active {
-            border-radius: 5px;
-            box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-        }
+            @media (max-width: 991.98px) {
+                .sidebar {
+                    width: 100%;
+                }
+            }
 
-        .sidebar-sticky {
-            position: relative;
-            top: 0;
-            height: calc(100vh - 48px);
-            padding-top: 0.5rem;
-            overflow-x: hidden;
-            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-        }
-    </style>
-    <script>
-        // Graph
-        var ctx = document.getElementById("myChart");
+            .sidebar .active {
+                border-radius: 5px;
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+            }
 
-        var myChart = new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: [
-                    "Sunday",
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                ],
-                datasets: [
-                    {
-                        data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                        lineTension: 0,
-                        backgroundColor: "transparent",
-                        borderColor: "#007bff",
-                        borderWidth: 4,
-                        pointBackgroundColor: "#007bff",
-                    },
-                ],
-            },
-            options: {
-                scales: {
-                    yAxes: [
+            .sidebar-sticky {
+                position: relative;
+                top: 0;
+                height: calc(100vh - 48px);
+                padding-top: 0.5rem;
+                overflow-x: hidden;
+                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+            }
+        </style>
+        <script>
+            // Graph
+            var ctx = document.getElementById("myChart");
+
+            var myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: [
+                        "Sunday",
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                    ],
+                    datasets: [
                         {
-                            ticks: {
-                                beginAtZero: false,
-                            },
+                            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                            lineTension: 0,
+                            backgroundColor: "transparent",
+                            borderColor: "#007bff",
+                            borderWidth: 4,
+                            pointBackgroundColor: "#007bff",
                         },
                     ],
                 },
-                legend: {
-                    display: false,
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: false,
+                                },
+                            },
+                        ],
+                    },
+                    legend: {
+                        display: false,
+                    },
                 },
-            },
-        });
-    </script>
-    <!-- MDB -->
-    <!-- Font Awesome -->
+            });
+        </script>
+        <!-- MDB -->
+        <!-- Font Awesome -->
 
-</head>
-<!--Main Navigation-->
-<header>
-    <!-- Sidebar -->
+    </head>
+    <!--Main Navigation-->
+    <header>
+        <!-- Sidebar -->
 
-    <nav
-            id="sidebarMenu"
-            class="collapse d-lg-block sidebar collapse ">
+        <nav
+                id="sidebarMenu"
+                class="collapse d-lg-block sidebar collapse ">
 
-        <div class="position-sticky">
-            <div class="list-group list-group-flush mx-3 mt-4">
-                <a
-                        href="/dashboard_general"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                        aria-current="true"
-                >
-                    <i class="fas fa-tachometer-alt fa-fw me-3"></i
-                    ><span>Main dashboard</span>
-                </a>
-                <a
-                        href="/admin-dashboard_detalle"
-                        class="list-group-item list-group-item-action py-2 ripple active"
-                >
-                    <i class="fas fa-chart-area fa-fw me-3"></i
-                    ><span>Dashboard´s Detalles</span>
-                </a>
-                <a
-                        href="/admin_fecha_ordenes"
-                         class="list-group-item list-group-item-action py-2 ripple"
-                >
-                    <i class="far fa-calendar-alt me-3"></i><span>
+            <div class="position-sticky">
+                <div class="list-group list-group-flush mx-3 mt-4">
+
+                    <a
+                            href="/admin-dashboard_detalle"
+                            class="list-group-item list-group-item-action py-2 ripple active"
+                    >
+                        <i class="fas fa-chart-area fa-fw me-3"></i
+                        ><span>Dashboard</span>
+                    </a>
+                    <a
+                            href="/admin_fecha_ordenes"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    >
+                        <i class="far fa-calendar-alt me-3"></i><span>
                 fecha_ordenes</span>
-                </a>
-                <a
-                        href="/admin_pagos"
-                         class="list-group-item list-group-item-action py-2 ripple"
-                >
-                    <i class="fab fa-cc-paypal me-3"></i><span>
+                    </a>
+                    <a
+                            href="/admin_pagos"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    >
+                        <i class="fab fa-cc-paypal me-3"></i><span>
                 Pagos</span>
-                </a>
+                    </a>
 
-                <a
-                        href="/view-customer"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-user-friends me-3"></i><span>Clientes</span></a
-                >
-                <a
-                        href="/admin-products"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-cart-arrow-down me-3"></i><span>Productos</span></a
-                >
-                <a
-                        href="/kardex_opciones"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-chart-line fa-fw me-3"></i
-                ><span>Kardex</span></a
-                >
-                <a
-                        href="/Paquetes_opciones"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-archive me-3"></i><span>Paquetes</span></a
-                >
-                <a
-                        href="/categoria_admin"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                >
-                    <i class="fas fa-chart-pie fa-fw me-3"></i><span>Categorias</span>
-                </a>
-                <a
-                        href="/admin-view-booking"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Ordenes</span></a
-                >
-                <a
-                        href="/view-feedback"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-globe fa-fw me-3"></i
-                ><span>Mensajes</span>
-                </a>
-                <a
-                        href="/admin_proveedor/"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-building fa-fw me-3"></i
-                ><span>Proveedores</span></a
-                >
-                <a
-                        href="/admin_distribuidor"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-bus me-3"></i><span>Distribuidor</span></a
-                >
-                <a
-                        href="/logout"
-                        class="list-group-item list-group-item-action py-2 ripple"
-                ><i class="fas fa-lock me-3"></i><span>Cerrar sesión</span></a
-                >
+                    <a
+                            href="/view-customer"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-user-friends me-3"></i><span>Clientes</span></a
+                    >
+                    <a
+                            href="/admin-products"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-cart-arrow-down me-3"></i><span>Productos</span></a
+                    >
+                    <a
+                            href="/kardex_opciones"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-chart-line fa-fw me-3"></i
+                    ><span>Kardex</span></a
+                    >
+                    <a
+                            href="/Paquetes_opciones"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-archive me-3"></i><span>Paquetes</span></a
+                    >
+                    <a
+                            href="/categoria_admin"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    >
+                        <i class="fas fa-chart-pie fa-fw me-3"></i><span>Categorias</span>
+                    </a>
+                    <a
+                            href="/admin-view-booking"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Ordenes</span></a
+                    >
+                    <a
+                            href="/view-feedback"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-globe fa-fw me-3"></i
+                    ><span>Mensajes</span>
+                    </a>
+                    <a
+                            href="/admin_proveedor/"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-building fa-fw me-3"></i
+                    ><span>Proveedores</span></a
+                    >
+                    <a
+                            href="/admin_distribuidor"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-bus me-3"></i><span>Distribuidor</span></a
+                    >
+                    <a
+                            href="/logout"
+                            class="list-group-item list-group-item-action py-2 ripple"
+                    ><i class="fas fa-lock me-3"></i><span>Cerrar sesión</span></a
+                    >
 
 
+                </div>
             </div>
-        </div>
-    </nav>
-    <!-- Sidebar -->
+        </nav>
+        <!-- Sidebar -->
 
 
-    <!-- Navbar -->
-    <nav
-            id="main-navbar"
-            class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
-    >
-        <!-- Container wrapper -->
-        <div class="container-fluid">
-            <!-- Toggle button -->
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#sidebarMenu"
-                    aria-controls="sidebarMenu"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <i class="fas fa-bars"></i>
-            </button>
+        <!-- Navbar -->
+        <nav
+                id="main-navbar"
+                class="navbar navbar-expand-lg navbar-light bg-white fixed-top"
+        >
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <!-- Toggle button -->
+                <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-mdb-toggle="collapse"
+                        data-mdb-target="#sidebarMenu"
+                        aria-controls="sidebarMenu"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                >
+                    <i class="fas fa-bars"></i>
+                </button>
 
-            <!-- Brand -->
-            <a class="navbar-brand" href="/admin-dashboard">
-                IKERGUST
-            </a>
+                <!-- Brand -->
+                <a class="navbar-brand" href="/admin-dashboard">
+                    IKERGUST
+                </a>
 
-            <!-- Right links -->
-            <ul class="navbar-nav ms-auto d-flex flex-row">
+                <!-- Right links -->
+                <ul class="navbar-nav ms-auto d-flex flex-row">
 
-                <!-- Notification dropdown -->
-                <li class="nav-item dropdown">
-                    <a
-                            class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuLink"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
-                    >
-                        <i class="fas fa-bell"></i>
-                        <span class="badge rounded-pill badge-notification bg-danger"
-                        > {{ feedback }} </span>
-                    </a>
-                    <ul
-                            class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuLink"
-                    >
+                    <!-- Notification dropdown -->
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
+                                href="#"
+                                id="navbarDropdownMenuLink"
+                                role="button"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            <i class="fas fa-bell"></i>
+                            <span class="badge rounded-pill badge-notification bg-danger"
+                            > {{ feedback }} </span>
+                        </a>
+                        <ul
+                                class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="navbarDropdownMenuLink"
+                        >
 
-                        {% for f in feedbacks2|slice:"2:" %}
-                            <li>
-                                <div class="card">
-                                    <div class="card-header">
-                                        Notificación nro: {{ f.id }}
+                            {% for f in feedbacks2|slice:"2:" %}
+                                <li>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Notificación nro: {{ f.id }}
+                                        </div>
+                                        <div class="card-body">
+                                            <span class="badge bg-warning text-dark">{{ f.user.username }} {{ f.estado }}</span>
+                                            <a href="/view-feedback">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-arrow-right-circle-fill"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                                                </svg>
+                                            </a>
+
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <span class="badge bg-warning text-dark">{{ f.user.username }} {{ f.estado }}</span>
-                                       <a href="/view-feedback"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                             fill="currentColor" class="bi bi-arrow-right-circle-fill"
-                                             viewBox="0 0 16 16">
-                                            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-                                        </svg></a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
 
-                                    </div>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </li>
+                    <!-- Avatar -->
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
+                                href="#"
+                                id="navbarDropdownMenuLink"
+                                role="button"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            <img
+                                    src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
+                                    class="rounded-circle"
+                                    height="22"
+                                    alt=""
+                                    loading="lazy"
+                            />
+                        </a>
+                        <ul
+                                class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="navbarDropdownMenuLink"
+                        >
 
-                <!-- Avatar -->
-                <li class="nav-item dropdown">
-                    <a
-                            class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
-                            href="#"
-                            id="navbarDropdownMenuLink"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
-                    >
-                        <img
-                                src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
-                                class="rounded-circle"
-                                height="22"
-                                alt=""
-                                loading="lazy"
-                        />
-                    </a>
-                    <ul
-                            class="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuLink"
-                    >
+                            <li><a class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- Container wrapper -->
+        </nav>
+        <!-- Navbar -->
+    </header>
+    <!--Main Navigation-->
 
-                        <li><a class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
-                    </ul>
-                </li>
-            </ul>
+
+    <!-- content start-->
+    <main style="margin-top: 58px">
+        <div class="container pt-4">
+
+            {% block content %}
+
+
+
+
+            {% endblock content %}
+
         </div>
-        <!-- Container wrapper -->
-    </nav>
-    <!-- Navbar -->
-</header>
-<!--Main Navigation-->
+    </main>
+    <!-- content end-->
+    <br><br><br><br><br><br><br><br>
 
-
-<!-- content start-->
-<main style="margin-top: 58px">
-    <div class="container pt-4">
-
-        {% block content %}
-
-
-        {% endblock content %}
-    </div>
-</main>
-<!-- content end-->
-<br><br><br><br><br><br><br><br>
-
-</body>
-</html>
+    </body>
+    </html>
+    {% elif not request.user.is_staff  %}
+        <h1 class="text-center">Oye! tu no puedes acceder a esta pagina </h1>
+{% endif %}

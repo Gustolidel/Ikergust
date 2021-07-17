@@ -86,7 +86,7 @@
                             empresarial registrada
                             correctamente!</p>
 
-                        <input id="usuario" class="form-control text-center" placeholder="Escribe el ruc de tu empresa">
+                        <input id="usuario" class="form-control text-center" placeholder="Escribe el ruc de tu empresa" required title="solo admite numeros">
 
                         <div class="text-center pt-3">
                             <button onclick="buscar()" type="button" class="btn btn-primary">Buscar Empresa</button>
@@ -101,11 +101,7 @@
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <br><br>
-
-
                             <div class="row ">
-
-
                                 <div class="col-lg-12">
                                     <table id="respuesta" class="table">
                                         <thead>
@@ -113,33 +109,36 @@
                                         </thead>
                                         <tbody id="respuesta_body">
                                         <input class="form-control" name="usuario"
-                                               placeholder="Ingrese nombre de Usuario" required> <br>
-                                        <input class="form-control" name="contraseña"
-                                               placeholder="Ingrese una contraseña" required>
+                                               placeholder="Ingrese nombre de Usuario" required pattern="[A-Za-z0-9]+"  title="Letras y números"> <br>
+                                        <input class="form-control" name="contraseña" type="password"
+                                               placeholder="Ingrese una contraseña" required pattern="[A-Za-z0-9]+"  title="Letras y números">
                                         <br>
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
+<style>
 
+input:required {
+  border-color: #4CAF50;
+
+}
+
+input:required:invalid {
+  border-color: #C00000;
+}
+</style>
                             <!--  4. agrega el script final del body -->
                             <script>
 
                                 // 5. crear metodo buscar
                                 function buscar() {
-
                                     // 6. obtene el valor del <input id="usuario">
                                     let usuario = $('#usuario').val()
-
                                     $.ajax({
-
                                         // 7. agrega el valor a la url
                                         url: "https://dniruc.apisperu.com/api/v1/ruc/"+ usuario +"?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpvcmdlYXV0b25vbWE4QGdtYWlsLmNvbSJ9.GfKJW3zmR6jpI5PZ89gec3n-e4JtZAy0LjWdRpgt3JU"
-
                                     }).done(function (data) {
-
-
                                         // 8. construyes el <tr> con tus datos de respuesta
                                         let tr = '<label style="color: #1a88ff" class="pt-3">Ruc Empresarial</label><input name="ruc" class="form-control" value="' + data.ruc + '" readonly><tr><br>' +
                                             '<label style="color: #1a88ff">Razón Social</label><input name="razon_social" class="form-control" value="' + data.razonSocial + '" readonly><br>' +
@@ -155,18 +154,14 @@
 
                                             '</br>'
                                         console.log(tr) // *opcional para ver en consola
-
                                         // 9. usas append para agregar el tr al final
                                         $('#respuesta_body').append(tr)
-
                                     });
                                 }
-
 
                                 function limpiar() {
                                     document.getElementById("prueba").value = "";
                                 }
-
 
                                 // Obtenemos una referencia al elemento
                                 const $elemento = document.querySelector("#respuesta_body");

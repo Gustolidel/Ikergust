@@ -1,503 +1,507 @@
 {% extends 'ecom/admin_base.html' %}
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 {% load static %}
 {% block content %}
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <script>
-        AOS.init();
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    {% if request.user.is_staff %}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script>
+            AOS.init();
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 
-    {% include 'ecom/admin_dashboard_cards.html' %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!--Section: Statistics with subtitles-->
-    <section>
-        <div class="row">
-            <div class="col-xl-6 col-md-12 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between p-md-1">
-                            <div class="d-flex flex-row">
-                                <div class="align-self-center">
-                                    <i class="fas fa-pencil-alt text-info fa-3x me-4"></i>
+        {% include 'ecom/admin_dashboard_cards.html' %}
+
+        <!--Section: Statistics with subtitles-->
+        <section>
+            <div class="row">
+                <div class="col-xl-6 col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <i class="fas fa-pencil-alt text-info fa-3x me-4"></i>
+                                    </div>
+                                    <div>
+                                        <h4>Total Grupos</h4>
+                                        <p class="mb-0">cantidad de grupos del sistema</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h4>Total Grupos</h4>
-                                    <p class="mb-0">cantidad de grupos del sistema</p>
+                                <div class="align-self-center">
+                                    <h2 class="h1 mb-0"> {{ total_grupos }}</h2>
                                 </div>
                             </div>
-                            <div class="align-self-center">
-                                <h2 class="h1 mb-0"> {{ total_grupos }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <i
+                                                class="far fa-comment-alt text-warning fa-3x me-4"
+                                        ></i>
+                                    </div>
+                                    <div>
+                                        <h4>Total Usuarios Sistema</h4>
+                                        <p class="mb-0">Cantidad de usuarios excistentes</p>
+                                    </div>
+                                </div>
+                                <div class="align-self-center">
+                                    <h2 class="h1 mb-0">{{ total_usuarios }}</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-md-12 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between p-md-1">
-                            <div class="d-flex flex-row">
-                                <div class="align-self-center">
-                                    <i
-                                            class="far fa-comment-alt text-warning fa-3x me-4"
-                                    ></i>
+            <div class="row">
+                <div class="col-xl-6 col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <h2 class="h1 mb-0 me-4">{{ cliente_registrado }}</h2>
+                                    </div>
+                                    <div>
+                                        <h4>Total Clientes Registrados</h4>
+                                        <p class="mb-0">cantidad de clientes registrados</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h4>Total Usuarios Sistema</h4>
-                                    <p class="mb-0">Cantidad de usuarios excistentes</p>
+                                <div class="align-self-center">
+                                    <i class="far fa-heart text-danger fa-3x"></i>
                                 </div>
                             </div>
-                            <div class="align-self-center">
-                                <h2 class="h1 mb-0">{{ total_usuarios }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <h2 class="h1 mb-0 me-4">{{ total_productos_precio }}</h2>
+                                    </div>
+                                    <div>
+                                        <h4>Total Costo Productos</h4>
+                                        <p class="mb-0">Total monto de inventario</p>
+                                    </div>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-wallet text-success fa-3x"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-6 col-md-12 mb-4">
+        </section>
+        <!--Section: Statistics with subtitles-->
+
+
+
+        <!--Grid row-->
+        <div class="row wow fadeIn">
+
+            <!--Grid column-->
+            <div class="col-md-9 mb-4">
+
+                <!--Card-->
                 <div class="card">
+
+                    <!--Card content-->
                     <div class="card-body">
-                        <div class="d-flex justify-content-between p-md-1">
-                            <div class="d-flex flex-row">
-                                <div class="align-self-center">
-                                    <h2 class="h1 mb-0 me-4">{{ cliente_registrado }}</h2>
-                                </div>
-                                <div>
-                                    <h4>Total Clientes Registrados</h4>
-                                    <p class="mb-0">cantidad de clientes registrados</p>
-                                </div>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="far fa-heart text-danger fa-3x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-6 col-md-12 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between p-md-1">
-                            <div class="d-flex flex-row">
-                                <div class="align-self-center">
-                                    <h2 class="h1 mb-0 me-4">{{ total_productos_precio }}</h2>
-                                </div>
-                                <div>
-                                    <h4>Total Costo Productos</h4>
-                                    <p class="mb-0">Total monto de inventario</p>
-                                </div>
-                            </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-wallet text-success fa-3x"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Section: Statistics with subtitles-->
 
 
-
-    <!--Grid row-->
-    <div class="row wow fadeIn">
-
-        <!--Grid column-->
-        <div class="col-md-9 mb-4">
-
-            <!--Card-->
-            <div class="card">
-
-                <!--Card content-->
-                <div class="card-body">
-
-
-                    <canvas id="bar-chart" width="800" height="450"></canvas>
-                    // Bar chart
-                    <script>
-                        new Chart(document.getElementById("bar-chart"), {
-                            type: 'bar',
-                            data: {
-                                labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-                                datasets: [
-                                    {
-                                        label: "Population (millions)",
-                                        barPercentage: 0.5,
-                                        barThickness: 100,
-                                        maxBarThickness: 100,
-                                        minBarLength: 100,
-                                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                                        data: [24, 26, 34, 84, 33],
-                                        borderColor: [
-                                            'rgb(255, 99, 132)',
-                                            'rgb(255, 159, 64)',
-                                            'rgb(255, 205, 86)',
-                                            'rgb(75, 192, 192)',
-                                            'rgb(54, 162, 235)',
-                                            'rgb(153, 102, 255)',
-                                            'rgb(201, 203, 207)'
-                                        ],
-                                        borderWidth: 1,
-                                        hoverBorderWidth: 2
-                                    }
-                                ]
-                            },
-                            options: {
-                                legend: {display: false},
-
-                                title: {
-                                    display: true,
-                                    text: 'Predicted world population (millions) in 2050'
-                                }
-                            }
-                        });
-
-
-                    </script>
-
-
-                </div>
-
-            </div>
-            <!--/.Card-->
-
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-        <div class="col-md-3 mb-4">
-
-            <!--Card-->
-            <div class="card mb-4">
-
-                <!-- Card header -->
-                <div class="card-header text-center">
-                    Pie chart
-                </div>
-
-                <!--Card content-->
-                <div class="card-body">
-
-                    <canvas id="myChart" width="400" height="400"></canvas>
-                    </body>
-                    <script>
-                        var ctx = document.getElementById("myChart").getContext("2d");
-                        var myChart = new Chart(ctx, {
-                            type: "pie",
-                            data: {
-                                labels: ['camara', 'Pc', 'Impresora'],
-                                datasets: [{
-                                    label: 'Num datos',
-                                    data: [{{ camara }}, {{ pc }}, {{ impresora }}],
-                                    backgroundColor: [
-                                        'rgb(66, 134, 244,0.5)',
-                                        'rgb(74, 135, 72,0.5)',
-                                        'rgb(229, 89, 50,0.5)'
-                                    ]
-                                }]
-                            },
-                            options: {
-                                legend: {
-                                    position: 'top',
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Chart.js Pie Chart'
-                                },
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
+                        <canvas id="bar-chart" width="800" height="450"></canvas>
+                        // Bar chart
+                        <script>
+                            new Chart(document.getElementById("bar-chart"), {
+                                type: 'bar',
+                                data: {
+                                    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                                    datasets: [
+                                        {
+                                            label: "Population (millions)",
+                                            barPercentage: 0.5,
+                                            barThickness: 100,
+                                            maxBarThickness: 100,
+                                            minBarLength: 100,
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: [24, 26, 34, 84, 33],
+                                            borderColor: [
+                                                'rgb(255, 99, 132)',
+                                                'rgb(255, 159, 64)',
+                                                'rgb(255, 205, 86)',
+                                                'rgb(75, 192, 192)',
+                                                'rgb(54, 162, 235)',
+                                                'rgb(153, 102, 255)',
+                                                'rgb(201, 203, 207)'
+                                            ],
+                                            borderWidth: 1,
+                                            hoverBorderWidth: 2
                                         }
-                                    }]
+                                    ]
+                                },
+                                options: {
+                                    legend: {display: false},
+
+                                    title: {
+                                        display: true,
+                                        text: 'Predicted world population (millions) in 2050'
+                                    }
                                 }
-                            }
-                        });
-                    </script>
+                            });
+
+
+                        </script>
+
+
+                    </div>
 
                 </div>
+                <!--/.Card-->
 
             </div>
-            <!--/.Card-->
+            <!--Grid column-->
 
-            <!--Card-->
-            <div class="card mb-4">
+            <!--Grid column-->
+            <div class="col-md-3 mb-4">
 
-                <!--Card content-->
-                <div class="card-body">
+                <!--Card-->
+                <div class="card mb-4">
 
-                    <!-- List group links -->
-                    <div class="list-group list-group-flush">
-                        <a class="list-group-item list-group-item-action waves-effect">Sales
-                            <span class="badge badge-success badge-pill pull-right">22%
+                    <!-- Card header -->
+                    <div class="card-header text-center">
+                        Pie chart
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                        </body>
+                        <script>
+                            var ctx = document.getElementById("myChart").getContext("2d");
+                            var myChart = new Chart(ctx, {
+                                type: "pie",
+                                data: {
+                                    labels: ['camara', 'Pc', 'Impresora'],
+                                    datasets: [{
+                                        label: 'Num datos',
+                                        data: [{{ camara }}, {{ pc }}, {{ impresora }}],
+                                        backgroundColor: [
+                                            'rgb(66, 134, 244,0.5)',
+                                            'rgb(74, 135, 72,0.5)',
+                                            'rgb(229, 89, 50,0.5)'
+                                        ]
+                                    }]
+                                },
+                                options: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Chart.js Pie Chart'
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+                <!--Card-->
+                <div class="card mb-4">
+
+                    <!--Card content-->
+                    <div class="card-body">
+
+                        <!-- List group links -->
+                        <div class="list-group list-group-flush">
+                            <a class="list-group-item list-group-item-action waves-effect">Sales
+                                <span class="badge badge-success badge-pill pull-right">22%
                     <i class="fas fa-arrow-up ml-1"></i>
                   </span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Traffic
-                            <span class="badge badge-danger badge-pill pull-right">5%
+                            </a>
+                            <a class="list-group-item list-group-item-action waves-effect">Traffic
+                                <span class="badge badge-danger badge-pill pull-right">5%
                     <i class="fas fa-arrow-down ml-1"></i>
                   </span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Orders
-                            <span class="badge badge-primary badge-pill pull-right">14</span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Issues
-                            <span class="badge badge-primary badge-pill pull-right">123</span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Messages
-                            <span class="badge badge-primary badge-pill pull-right">8</span>
-                        </a>
+                            </a>
+                            <a class="list-group-item list-group-item-action waves-effect">Orders
+                                <span class="badge badge-primary badge-pill pull-right">14</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action waves-effect">Issues
+                                <span class="badge badge-primary badge-pill pull-right">123</span>
+                            </a>
+                            <a class="list-group-item list-group-item-action waves-effect">Messages
+                                <span class="badge badge-primary badge-pill pull-right">8</span>
+                            </a>
+                        </div>
+                        <!-- List group links -->
+
                     </div>
-                    <!-- List group links -->
 
                 </div>
+                <!--/.Card-->
 
             </div>
-            <!--/.Card-->
+            <!--Grid column-->
 
         </div>
-        <!--Grid column-->
+        <!--Grid row-->
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    </div>
-    <!--Grid row-->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
+        <!--Grid row-->
+        {{ ordenes }}
+        {{ ordenes1 }}
+        <div class="row wow fadeInUp">
 
-    <script>
-        AOS.init();
-    </script>
-    <!--Grid row-->
-    {{ ordenes }}
-    {{ ordenes1 }}
-    <div class="row wow fadeInUp">
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
 
-        <!--Grid column-->
-        <div class="col-md-6 mb-4">
+                <!--Card-->
+                <div class="card">
 
-            <!--Card-->
-            <div class="card">
+                    <!--Card content-->
+                    <div class="card-body">
 
-                <!--Card content-->
-                <div class="card-body">
-
-                    <!-- Table  -->
-                    <table class="table table-hover">
-                        <!-- Table head -->
-                        <thead class="blue-grey lighten-4">
-                        <tr>
-                            <th>#</th>
-                            <th>Fecha</th>
-                            <th>Cliente</th>
-                            <th>Estado</th>
-                        </tr>
-                        </thead>
-                        <!-- Table head -->
-
-                        <!-- Table body -->
-                        <tbody>
-                        {% for product,customer,order in data %}
-
+                        <!-- Table  -->
+                        <table class="table table-hover">
+                            <!-- Table head -->
+                            <thead class="blue-grey lighten-4">
                             <tr>
-
-                                {% for c in customer %}
-                                    <td>{{ order.id }}</td>
-                                    <td> {{ order.order_date }}</td>
-                                    <td> {{ c.get_name }}</td>
-                                    <td>{{ order.status }}</td>
-
-
-                                {% endfor %}
-
+                                <th>#</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Estado</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                        <!-- Table body -->
-                    </table>
-                    <!-- Table  -->
+                            </thead>
+                            <!-- Table head -->
+
+                            <!-- Table body -->
+                            <tbody>
+                            {% for product,customer,order in data %}
+
+                                <tr>
+
+                                    {% for c in customer %}
+                                        <td>{{ order.id }}</td>
+                                        <td> {{ order.order_date }}</td>
+                                        <td> {{ c.get_name }}</td>
+                                        <td>{{ order.status }}</td>
+
+
+                                    {% endfor %}
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <!-- Table body -->
+                        </table>
+                        <!-- Table  -->
+
+                    </div>
 
                 </div>
+                <!--/.Card-->
 
             </div>
-            <!--/.Card-->
+            <!--Grid column-->
 
-        </div>
-        <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
 
-        <!--Grid column-->
-        <div class="col-md-6 mb-4">
+                <!--Card-->
+                <div class="card">
 
-            <!--Card-->
-            <div class="card">
+                    <!--Card content-->
+                    <div class="card-body">
 
-                <!--Card content-->
-                <div class="card-body">
-
-                    <!-- Table  -->
-                    <table class="table table-hover">
-                        <!-- Table head -->
-                        <thead class="blue lighten-4">
-                        <tr>
-                            <th>#</th>
-                            <th>Fecha</th>
-                            <th>Cliente</th>
-                            <th>Estado</th>
-                        </tr>
-                        </thead>
-                        <!-- Table head -->
-
-                        <!-- Table body -->
-                        <tbody>
-                       {% for product,customer,order in data2 %}
-
+                        <!-- Table  -->
+                        <table class="table table-hover">
+                            <!-- Table head -->
+                            <thead class="blue lighten-4">
                             <tr>
-
-                                {% for c in customer %}
-                                    <td>{{ order.id }}</td>
-                                    <td> {{ order.order_date }}</td>
-                                    <td> {{ c.get_name }}</td>
-                                    <td>{{ order.status }}</td>
-
-
-                                {% endfor %}
-
+                                <th>#</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Estado</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                        <!-- Table body -->
-                    </table>
-                    <!-- Table  -->
+                            </thead>
+                            <!-- Table head -->
+
+                            <!-- Table body -->
+                            <tbody>
+                            {% for product,customer,order in data2 %}
+
+                                <tr>
+
+                                    {% for c in customer %}
+                                        <td>{{ order.id }}</td>
+                                        <td> {{ order.order_date }}</td>
+                                        <td> {{ c.get_name }}</td>
+                                        <td>{{ order.status }}</td>
+
+
+                                    {% endfor %}
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <!-- Table body -->
+                        </table>
+                        <!-- Table  -->
+
+                    </div>
 
                 </div>
+                <!--/.Card-->
 
             </div>
-            <!--/.Card-->
+            <!--Grid column-->
 
         </div>
-        <!--Grid column-->
+        <!--Grid row-->
 
-    </div>
-    <!--Grid row-->
+        <!--Grid row-->
+        <div class="row wow fadeIn">
 
-    <!--Grid row-->
-    <div class="row wow fadeIn">
+            <!--Grid column-->
+            <div class="col-lg-6 col-md-6 mb-4">
 
-        <!--Grid column-->
-        <div class="col-lg-6 col-md-6 mb-4">
+                <!--Card-->
+                <div class="card">
 
-            <!--Card-->
-            <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header">Doughnut Chart</div>
 
-                <!-- Card header -->
-                <div class="card-header">Doughnut Chart</div>
+                    <!--Card content-->
+                    <div class="card-body">
 
-                <!--Card content-->
-                <div class="card-body">
-
-                    <canvas id="doughnut-chart" width="800" height="450"></canvas>
-                    <script>
-                        new Chart(document.getElementById("doughnut-chart"), {
-                            type: 'doughnut',
-                            data: {
-                                labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-                                datasets: [
-                                    {
-                                        label: "Population (millions)",
-                                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                                        data: [2478, 5267, 734, 784, 433]
+                        <canvas id="doughnut-chart" width="800" height="450"></canvas>
+                        <script>
+                            new Chart(document.getElementById("doughnut-chart"), {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                                    datasets: [
+                                        {
+                                            label: "Population (millions)",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: [2478, 5267, 734, 784, 433]
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    title: {
+                                        display: true,
+                                        text: 'Predicted world population (millions) in 2050'
                                     }
-                                ]
-                            },
-                            options: {
-                                title: {
-                                    display: true,
-                                    text: 'Predicted world population (millions) in 2050'
                                 }
-                            }
-                        });
-                    </script>
+                            });
+                        </script>
+
+                    </div>
 
                 </div>
+                <!--/.Card-->
 
             </div>
-            <!--/.Card-->
+            <!--Grid column-->
 
-        </div>
-        <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-lg-6 col-md-6 mb-4">
 
-        <!--Grid column-->
-        <div class="col-lg-6 col-md-6 mb-4">
+                <!--Card-->
+                <div class="card">
 
-            <!--Card-->
-            <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header">Estados de Ordenes</div>
 
-                <!-- Card header -->
-                <div class="card-header">Estados de Ordenes</div>
+                    <!--Card content-->
+                    <div class="card-body">
 
-                <!--Card content-->
-                <div class="card-body">
-
-                    <canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
-                    <script>
-                        new Chart(document.getElementById("bar-chart-horizontal"), {
-                            type: 'horizontalBar',
-                            data: {
-                                labels: ["total_ordenes_pendientes", "total_ordenes_confirmadas", "total_ordenes_delivery", "total_ordenes_entregada"],
-                                datasets: [
-                                    {
-                                        label: "Population (millions)",
-                                        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                                        data: [{{ total_ordenes_pendientes }}, {{ total_ordenes_confirmadas }}, {{ total_ordenes_delivery }}, {{ total_ordenes_entregada }},]
+                        <canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
+                        <script>
+                            new Chart(document.getElementById("bar-chart-horizontal"), {
+                                type: 'horizontalBar',
+                                data: {
+                                    labels: ["total_ordenes_pendientes", "total_ordenes_confirmadas", "total_ordenes_delivery", "total_ordenes_entregada"],
+                                    datasets: [
+                                        {
+                                            label: "Population (millions)",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: [{{ total_ordenes_pendientes }}, {{ total_ordenes_confirmadas }}, {{ total_ordenes_delivery }}, {{ total_ordenes_entregada }},]
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    legend: {display: false},
+                                    title: {
+                                        display: true,
+                                        text: 'Estados de Ordenes de Compra Ikergust'
                                     }
-                                ]
-                            },
-                            options: {
-                                legend: {display: false},
-                                title: {
-                                    display: true,
-                                    text: 'Estados de Ordenes de Compra Ikergust'
                                 }
-                            }
-                        });
-                    </script>
+                            });
+                        </script>
+
+                    </div>
 
                 </div>
+                <!--/.Card-->
 
             </div>
-            <!--/.Card-->
-
+            <!--Grid column-->
         </div>
-        <!--Grid column-->
-    </div>
-    <!--Grid row-->
+        <!--Grid row-->
 
 
 
 
 
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#example_table').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                },
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#example_table').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
 
+                });
             });
-        });
 
-    </script>
+        </script>
 
-    </div>
-    </main>
+        </div>
+        </main>
+    {% endif %}
 {% endblock content %}
